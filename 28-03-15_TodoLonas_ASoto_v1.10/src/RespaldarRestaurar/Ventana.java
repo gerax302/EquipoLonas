@@ -195,7 +195,6 @@ public class Ventana extends javax.swing.JFrame {
                     bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host="+servidor+"--user="+usuario+"--password="+contrasena+"--port="+puerto+"--protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
                     JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
                 }
-
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error !", 2);
@@ -217,7 +216,7 @@ public class Ventana extends javax.swing.JFrame {
                 String[] cmd = new String[3];
                 cmd[0] = "cmd.exe";
                 cmd[1] = "/C";
-                cmd[2] = "c:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -root -h localhost " + bd + " < " + arq;
+                cmd[2] = "c:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u" +usuario+" -"+contrasena+" -h "+servidor+ " " + bd + " < " + arq;
                 Runtime rt = Runtime.getRuntime();
                 System.out.println("Ejecutando:  " + cmd[0] + " " + cmd[1]);
                 proc = rt.exec(cmd);
