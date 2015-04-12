@@ -5,18 +5,17 @@ import java.sql.Connection;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import Conexion.Conexion;
-
+    
 public class Ventana extends javax.swing.JFrame {
 
+    //EDITAR LOS VALORES DE LAS CONEXIONES DE MANERA MANUAL
+    //SI SE TRATA DE HACER INSTANCIANDO LA CLASE CONEXION DEL PAQUETE CONEXION NO FUNCIONA, PORQUE, NO LO SE, PERO DEBE SER MANUALMENTE
+    
     ProcessBuilder constructorProceso;
     Connection con = null;
     Process proc;
-    
-    private final String servidor = Conexion.nombreServidor;
-    private final String puerto = Conexion.puerto;
-    private final String usuario = Conexion.usuarioBD;
-    private final String contrasena = Conexion.contrasena;
-    private final String bd = "pruebas" ;//Conexion.nombreBD;
+
+    private final String bd = "pruebas";
 
     public Ventana() {
         initComponents();
@@ -182,7 +181,7 @@ public class Ventana extends javax.swing.JFrame {
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                     if (opcion == JOptionPane.YES_OPTION) {
                         Runtime bck = Runtime.getRuntime();
-                        bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host="+servidor+"--user="+usuario+"--password="+contrasena+"--port="+puerto+"--protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
+                        bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
                         JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
                     } 
                     else {
@@ -190,9 +189,8 @@ public class Ventana extends javax.swing.JFrame {
                     }
                 }
                 else {
-
                     Runtime bck = Runtime.getRuntime();
-                    bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host="+servidor+"--user="+usuario+"--password="+contrasena+"--port="+puerto+"--protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
+                    bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
                     JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
                 }
             }
@@ -207,16 +205,17 @@ public class Ventana extends javax.swing.JFrame {
             JFC_Backup.setVisible(true);
             int result = JFC_Backup.showOpenDialog(null);
             if (result == JFileChooser.OPEN_DIALOG) {
-                cajaRespaldar.setText(JFC_Backup.getSelectedFile().getAbsolutePath());
                 File bkp;
                 bkp = JFC_Backup.getSelectedFile();
                 String arq = bkp.getPath();
+                cajaRespaldar.setText(arq);                
                 System.out.println("bd " + bd);
                 System.out.println("arq " + arq);
                 String[] cmd = new String[3];
                 cmd[0] = "cmd.exe";
                 cmd[1] = "/C";
-                cmd[2] = "c:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u" +usuario+" -"+contrasena+" -h "+servidor+ " " + bd + " < " + arq;
+                //cmd[2] = "c:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -root -h localhost " + bd + " < " + arq;
+                cmd[2] = "C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -root -h localhost "+bd+" < " + arq;
                 Runtime rt = Runtime.getRuntime();
                 System.out.println("Ejecutando:  " + cmd[0] + " " + cmd[1]);
                 proc = rt.exec(cmd);
@@ -229,10 +228,10 @@ public class Ventana extends javax.swing.JFrame {
                 outputGobbler.run();
                 // any error???
                 int exitVal = proc.waitFor();
-
                 if (exitVal == 0) {
                     JOptionPane.showMessageDialog(null, "La Base de Datos se ha restaurado exitosamente !");
-                } else {
+                }
+                else {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar restaurar. !");
                 }
             }
