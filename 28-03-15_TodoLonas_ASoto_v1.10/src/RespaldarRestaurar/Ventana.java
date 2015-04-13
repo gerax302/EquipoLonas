@@ -4,9 +4,9 @@ import java.io.File;
 import java.sql.Connection;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import Conexion.Conexion;
     
-public class Ventana extends javax.swing.JFrame {
+public class Ventana extends javax.swing.JFrame 
+{
 
     //EDITAR LOS VALORES DE LAS CONEXIONES DE MANERA MANUAL
     //SI SE TRATA DE HACER INSTANCIANDO LA CLASE CONEXION DEL PAQUETE CONEXION NO FUNCIONA, PORQUE, NO LO SE, PERO DEBE SER MANUALMENTE
@@ -14,17 +14,20 @@ public class Ventana extends javax.swing.JFrame {
     ProcessBuilder constructorProceso;
     Connection con = null;
     Process proc;
-
+    //Asignamos el nombre de la base de datos que se desea respaldar
     private final String bd = "pruebas";
 
-    public Ventana() {
+    public Ventana() 
+    {
         initComponents();
-        try {
+        try 
+        {
             con = Conecta.conectar();//Conecta ao banco de dados 
             JFC_Backup.setVisible(false);
             JFC_Salvar_Backup.setVisible(false);
         } 
-        catch (Exception e) {
+        catch (Exception e) 
+        {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error !", 2);
         }
     }
@@ -166,45 +169,54 @@ public class Ventana extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRespaldarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRespaldarActionPerformed
-        try {
+        try 
+        {
             String archivo = null;
             JFC_Salvar_Backup.setVisible(true);
             int result = JFC_Salvar_Backup.showSaveDialog(null);
-            if (result == JFileChooser.APPROVE_OPTION) {
+            if (result == JFileChooser.APPROVE_OPTION)
+            {
                 cajaRespaldar.setText(JFC_Salvar_Backup.getSelectedFile().getAbsolutePath());
                 archivo = JFC_Salvar_Backup.getSelectedFile().toString().concat(".sql");
                 cajaRespaldar.setText(archivo);
                 File file = new File(archivo);
-                if (file.exists()) {
+                if (file.exists()) 
+                {
                     Object[] options = {"Si", "No"};
                     int opcion = JOptionPane.showOptionDialog(null, "Este archivo ya existe. Desea sobreescribirlo?", "Atención !!!",
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                    if (opcion == JOptionPane.YES_OPTION) {
+                    if (opcion == JOptionPane.YES_OPTION) 
+                    {
                         Runtime bck = Runtime.getRuntime();
                         bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
                         JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
                     } 
-                    else {
+                    else 
+                    {
                         System.out.println("Ups, algo no salió bien");
                     }
                 }
-                else {
+                else 
+                {
                     Runtime bck = Runtime.getRuntime();
                     bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
                     JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
                 }
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error !", 2);
         }
 
     }//GEN-LAST:event_btnRespaldarActionPerformed
 
     private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
-        try {
+        try 
+        {
             JFC_Backup.setVisible(true);
             int result = JFC_Backup.showOpenDialog(null);
-            if (result == JFileChooser.OPEN_DIALOG) {
+            if (result == JFileChooser.OPEN_DIALOG)
+            {
                 File bkp;
                 bkp = JFC_Backup.getSelectedFile();
                 String arq = bkp.getPath();
@@ -228,15 +240,18 @@ public class Ventana extends javax.swing.JFrame {
                 outputGobbler.run();
                 // any error???
                 int exitVal = proc.waitFor();
-                if (exitVal == 0) {
+                if (exitVal == 0) 
+                {
                     JOptionPane.showMessageDialog(null, "La Base de Datos se ha restaurado exitosamente !");
                 }
-                else {
+                else 
+                {
                     JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar restaurar. !");
                 }
             }
         }
-        catch (Exception e) {
+        catch (Exception e) 
+        {
             JOptionPane.showMessageDialog(null, e, "Error!", 2);
         }
     }//GEN-LAST:event_btnRestaurarActionPerformed
