@@ -1,7 +1,5 @@
 package Clientes;
 
-import java.io.FileInputStream;
-
 public class Modelo {
     
     public static String SELECT_ALL = "SELECT * FROM cliente order by categoriaCliente, nombreCliente";
