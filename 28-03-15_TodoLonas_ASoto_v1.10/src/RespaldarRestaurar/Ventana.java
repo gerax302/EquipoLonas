@@ -15,7 +15,7 @@ public class Ventana extends javax.swing.JFrame
     Connection con = null;
     Process proc;
     //Asignamos el nombre de la base de datos que se desea respaldar
-    private final String bd = "pruebas";
+    private final String bd = "todolonas";
 
     public Ventana() 
     {
@@ -188,7 +188,7 @@ public class Ventana extends javax.swing.JFrame
                     if (opcion == JOptionPane.YES_OPTION) 
                     {
                         Runtime bck = Runtime.getRuntime();
-                        bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
+                        bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=utf8 --hex-blob  --result-file=" + archivo + " --databases "+bd);
                         JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
                     } 
                     else 
@@ -199,7 +199,7 @@ public class Ventana extends javax.swing.JFrame
                 else 
                 {
                     Runtime bck = Runtime.getRuntime();
-                    bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=latin1 --hex-blob  --result-file=" + archivo + " --databases "+bd);
+                    bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=utf8 --hex-blob  --result-file=" + archivo + " --databases "+bd);
                     JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
                 }
             }
