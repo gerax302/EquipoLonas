@@ -23,7 +23,6 @@ public class Ventana extends javax.swing.JFrame
         try 
         {
             con = Conecta.conectar();//Conecta ao banco de dados 
-            JFC_Backup.setVisible(false);
             JFC_Salvar_Backup.setVisible(false);
         } 
         catch (Exception e) 
@@ -37,49 +36,15 @@ public class Ventana extends javax.swing.JFrame
     private void initComponents() {
 
         panelBase = new javax.swing.JPanel();
-        panelRestaurar = new javax.swing.JPanel();
-        cajaRestaurar = new javax.swing.JTextField();
-        btnRestaurar = new javax.swing.JButton();
         panelRespaldar = new javax.swing.JPanel();
         cajaRespaldar = new javax.swing.JTextField();
         btnRespaldar = new javax.swing.JButton();
         JFC_Salvar_Backup = new javax.swing.JFileChooser();
-        JFC_Backup = new javax.swing.JFileChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Respaldar y Restaurar Base de Datos");
 
         panelBase.setBackground(new java.awt.Color(255, 255, 255));
-
-        panelRestaurar.setBackground(new java.awt.Color(255, 255, 255));
-        panelRestaurar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Restaurar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
-
-        btnRestaurar.setText("Restaurar");
-        btnRestaurar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRestaurarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelRestaurarLayout = new javax.swing.GroupLayout(panelRestaurar);
-        panelRestaurar.setLayout(panelRestaurarLayout);
-        panelRestaurarLayout.setHorizontalGroup(
-            panelRestaurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRestaurarLayout.createSequentialGroup()
-                .addComponent(cajaRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRestaurar)
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        panelRestaurarLayout.setVerticalGroup(
-            panelRestaurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRestaurarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelRestaurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cajaRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRestaurar))
-                .addContainerGap())
-        );
 
         panelRespaldar.setBackground(new java.awt.Color(255, 255, 255));
         panelRespaldar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Respaldar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
@@ -119,15 +84,8 @@ public class Ventana extends javax.swing.JFrame
             panelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBaseLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBaseLayout.createSequentialGroup()
-                        .addComponent(panelRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelBaseLayout.createSequentialGroup()
-                        .addComponent(JFC_Salvar_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(JFC_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                .addComponent(JFC_Salvar_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(216, Short.MAX_VALUE))
             .addGroup(panelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelBaseLayout.createSequentialGroup()
                     .addContainerGap()
@@ -137,18 +95,14 @@ public class Ventana extends javax.swing.JFrame
         panelBaseLayout.setVerticalGroup(
             panelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBaseLayout.createSequentialGroup()
-                .addContainerGap(92, Short.MAX_VALUE)
-                .addComponent(panelRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(panelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(JFC_Salvar_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JFC_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55))
+                .addContainerGap(98, Short.MAX_VALUE)
+                .addComponent(JFC_Salvar_Backup, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
             .addGroup(panelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelBaseLayout.createSequentialGroup()
                     .addGap(21, 21, 21)
                     .addComponent(panelRespaldar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(202, Short.MAX_VALUE)))
+                    .addContainerGap(53, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -161,7 +115,9 @@ public class Ventana extends javax.swing.JFrame
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         pack();
@@ -210,52 +166,6 @@ public class Ventana extends javax.swing.JFrame
 
     }//GEN-LAST:event_btnRespaldarActionPerformed
 
-    private void btnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarActionPerformed
-        try 
-        {
-            JFC_Backup.setVisible(true);
-            int result = JFC_Backup.showOpenDialog(null);
-            if (result == JFileChooser.OPEN_DIALOG)
-            {
-                File bkp;
-                bkp = JFC_Backup.getSelectedFile();
-                String arq = bkp.getPath();
-                cajaRespaldar.setText(arq);                
-                System.out.println("bd " + bd);
-                System.out.println("arq " + arq);
-                String[] cmd = new String[3];
-                cmd[0] = "cmd.exe";
-                cmd[1] = "/C";
-                //cmd[2] = "c:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -root -h localhost " + bd + " < " + arq;
-                cmd[2] = "C:\\Program Files\\MySQL\\MySQL Server 5.6\\bin\\mysql -u root -root -h localhost "+bd+" < " + arq;
-                Runtime rt = Runtime.getRuntime();
-                System.out.println("Ejecutando:  " + cmd[0] + " " + cmd[1]);
-                proc = rt.exec(cmd);
-                // any error message?
-                StreamGobbler errorGobbler = new StreamGobbler(proc.getErrorStream(), "ERROR");
-                // any output?
-                StreamGobbler outputGobbler = new StreamGobbler(proc.getInputStream(), "OUTPUT");
-                // kick them off
-                errorGobbler.run();
-                outputGobbler.run();
-                // any error???
-                int exitVal = proc.waitFor();
-                if (exitVal == 0) 
-                {
-                    JOptionPane.showMessageDialog(null, "La Base de Datos se ha restaurado exitosamente !");
-                }
-                else 
-                {
-                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar restaurar. !");
-                }
-            }
-        }
-        catch (Exception e) 
-        {
-            JOptionPane.showMessageDialog(null, e, "Error!", 2);
-        }
-    }//GEN-LAST:event_btnRestaurarActionPerformed
-
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -276,14 +186,10 @@ public class Ventana extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFileChooser JFC_Backup;
     private javax.swing.JFileChooser JFC_Salvar_Backup;
     private javax.swing.JButton btnRespaldar;
-    private javax.swing.JButton btnRestaurar;
     private javax.swing.JTextField cajaRespaldar;
-    private javax.swing.JTextField cajaRestaurar;
     private javax.swing.JPanel panelBase;
     private javax.swing.JPanel panelRespaldar;
-    private javax.swing.JPanel panelRestaurar;
     // End of variables declaration//GEN-END:variables
 }
