@@ -11,8 +11,4 @@ public class Conexion
     public static final String puerto = "3306";
     public static final int numPuerto = Integer.parseInt(puerto);
     
-    public static String enviaNombreServidor()
-    {
-        return nombreServidor;
-    }
 }
