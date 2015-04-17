@@ -78,6 +78,7 @@ public class ExportarPDF {
         }
     }
     public static void guardarPDF() {
+        obtenerNumeroCotizacion();
         nombrePDF = PanelCotizacion.labelObtenerNombreCliente.getText();
         fecha = PanelCotizacion.labelObtenerFecha.getText();
         System.out.println("hora=====     "+hora);

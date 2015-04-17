@@ -1,7 +1,6 @@
 package Cotizacion;
 
 /**
- *
  * @author Ana Karen
  */
 public class DatosExtra extends javax.swing.JFrame {
@@ -10,6 +9,10 @@ public class DatosExtra extends javax.swing.JFrame {
 
     public DatosExtra() {
         initComponents();
+        if(!cajaEspecificacionTrabajo.getText().isEmpty())
+            precio1 = Double.parseDouble(cajaEspecificacionTrabajo.getText());
+        if(!cajaEspecificacionDiseno.getText().isEmpty())
+            precio2 = Double.parseDouble(cajaEspecificacionDiseno.getText());
         this.setLocationRelativeTo(null);
     }
 
@@ -151,14 +154,14 @@ public class DatosExtra extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static java.awt.TextArea areaEspecificacionDiseno;
     public static java.awt.TextArea areaEspecificacionTrabajo;
-    private javax.swing.JTextField cajaEspecificacionDiseno;
-    private javax.swing.JTextField cajaEspecificacionTrabajo;
+    public static javax.swing.JTextField cajaEspecificacionDiseno;
+    public static javax.swing.JTextField cajaEspecificacionTrabajo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    public static javax.swing.JPanel jPanel1;
+    public static javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

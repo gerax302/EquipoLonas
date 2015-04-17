@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Cotizacion;
 
 import Conexion.Conexion;
@@ -31,22 +26,21 @@ public class guardarCotizacion {
     public static String fecha;
     public static String cantidad[];
     public static String totalVentas, subtotalVentas, descuento, iva;
-    public static String especificacionTrabajo = "na", especificacionDiseno = "na";
+    public static String especificacionTrabajo = "", especificacionDiseno = "";
     public static int idNumeroCliente;
 
     public static void guardarTablaCotiza() {
         Connection conexion = null;
 
+        especificacionTrabajo = DatosExtra.precio1+"";
+        especificacionDiseno = DatosExtra.precio2+""; 
+        
+        nombreCliente = PanelCotizacion.labelObtenerNombreCliente.getText();
         fecha = PanelCotizacion.labelObtenerFecha.getText();
         totalVentas = PanelCotizacion.cajaTotal.getText();
         subtotalVentas = PanelCotizacion.cajaSubTotal.getText();
         descuento = PanelCotizacion.cajaDescuento.getText();
-        iva = PanelCotizacion.cajaIVA.getText();
-        especificacionTrabajo = DatosExtra.areaEspecificacionTrabajo.getText();
-        System.out.println("trabajo     " + especificacionTrabajo);
-        especificacionDiseno = DatosExtra.areaEspecificacionDiseno.getText();
-        System.out.println("diseno      " + especificacionDiseno);
-        nombreCliente = PanelCotizacion.labelObtenerNombreCliente.getText();
+        iva = PanelCotizacion.cajaIVA.getText();        
 
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
@@ -66,6 +60,7 @@ public class guardarCotizacion {
         }
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
+            //Class.forName("com.mysql.jdbc.Driver");
             conexion = (Connection) DriverManager.getConnection(url, login, password);
             stm = (Statement) conexion.createStatement();
             stm.executeUpdate("INSERT INTO `todolonas`.`cotizacion`"
@@ -83,7 +78,7 @@ public class guardarCotizacion {
                     + ");");
             conexion.close();
         } catch (Exception e) {
-            System.out.println("error gfdhd 1" + e);
+            System.out.println("error al guardar tabla cotiza [x]" + e);
         }
     }
 
