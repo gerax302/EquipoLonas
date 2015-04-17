@@ -716,7 +716,7 @@ public class PanelVentas extends javax.swing.JPanel {
                 Class.forName("org.gjt.mm.mysql.Driver");
                 conexion = (Connection) DriverManager.getConnection(url, login, password);
                 stm = (Statement) conexion.createStatement();
-                ResultSet rs = stm.executeQuery("select nombreProducto, descripcion, precioUnitario from todolonas.producto;");
+                ResultSet rs = stm.executeQuery("select nombreProducto, descripcion, precioUnitario from producto;");
 
                 while (rs.next()) {
                     tablaMostrarProductos.setModel(DbUtils.resultSetToTableModel(rs));
@@ -726,7 +726,7 @@ public class PanelVentas extends javax.swing.JPanel {
                 }
                 conexion.close();
             } catch (Exception e) {
-                System.out.println("error obtener max numeroVenta: " + e);
+                System.out.println("error: " + e.getCause().toString());
             }
         } else {
             Connection conexion = null;

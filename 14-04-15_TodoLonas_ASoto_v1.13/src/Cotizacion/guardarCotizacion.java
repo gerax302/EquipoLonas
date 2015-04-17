@@ -32,6 +32,7 @@ public class guardarCotizacion {
     public static String cantidad[];
     public static String totalVentas, subtotalVentas, descuento, iva;
     public static String especificacionTrabajo = "na", especificacionDiseno = "na";
+    public static int idNumeroCliente;
 
     public static void guardarTablaCotiza() {
         Connection conexion = null;
@@ -41,26 +42,38 @@ public class guardarCotizacion {
         subtotalVentas = PanelCotizacion.cajaSubTotal.getText();
         descuento = PanelCotizacion.cajaDescuento.getText();
         iva = PanelCotizacion.cajaIVA.getText();
-        nombreCliente = PanelCotizacion.labelObtenerNombreCliente.getText();
         especificacionTrabajo = DatosExtra.areaEspecificacionTrabajo.getText();
         System.out.println("trabajo     " + especificacionTrabajo);
         especificacionDiseno = DatosExtra.areaEspecificacionDiseno.getText();
         System.out.println("diseno      " + especificacionDiseno);
-        if (especificacionTrabajo.equals("") || especificacionDiseno.equals("")) {
-            especificacionTrabajo = "";
-            especificacionDiseno = "";
-        }
+        nombreCliente = PanelCotizacion.labelObtenerNombreCliente.getText();
 
+        try {
+            Class.forName("org.gjt.mm.mysql.Driver");
+            conexion = (Connection) DriverManager.getConnection(url, login, password);
+
+            stm = (Statement) conexion.createStatement();
+
+//            System.out.println("nombre++++---->      "+nombreCliente);
+            ResultSet rs = stm.executeQuery("select idCliente from todolonas.cliente where nombreCliente='" + nombreCliente + "';");
+            while (rs.next()) {
+                idNumeroCliente = rs.getInt("idCliente");
+//                System.out.println("id Numero Cliente----->     " + idNumeroCliente);
+            }
+            conexion.close();
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
             conexion = (Connection) DriverManager.getConnection(url, login, password);
             stm = (Statement) conexion.createStatement();
             stm.executeUpdate("INSERT INTO `todolonas`.`cotizacion`"
-                    + "(`numero`,`fecha`,`nombreCliente`,`subtotal`,`descuento`,`iva`,`total`,`especificacionTrabajo`,`especificacionDiseno`)"
+                    + "(`numero`,`fecha`,`idCliente`,`subtotal`,`descuento`,`iva`,`total`,`especificacionTrabajo`,`especificacionDiseno`)"
                     + "VALUES("
                     + "'" + id2 + "',"
                     + "'" + fecha + "',"
-                    + "'" + nombreCliente + "',"
+                    + "'" + idNumeroCliente + "',"
                     + "'" + subtotalVentas + "',"
                     + "'" + descuento + "',"
                     + "'" + iva + "',"

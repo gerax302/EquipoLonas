@@ -163,9 +163,50 @@ public class Ventana extends javax.swing.JFrame
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error !", 2);
         }
-
     }//GEN-LAST:event_btnRespaldarActionPerformed
 
+    public void generarRespaldo()
+    {
+        try 
+        {
+            String archivo = null;
+            JFC_Salvar_Backup.setVisible(true);
+            int result = JFC_Salvar_Backup.showSaveDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION)
+            {
+                cajaRespaldar.setText(JFC_Salvar_Backup.getSelectedFile().getAbsolutePath());
+                archivo = JFC_Salvar_Backup.getSelectedFile().toString().concat(".sql");
+                cajaRespaldar.setText(archivo);
+                File file = new File(archivo);
+                if (file.exists()) 
+                {
+                    Object[] options = {"Si", "No"};
+                    int opcion = JOptionPane.showOptionDialog(null, "Este archivo ya existe. Desea sobreescribirlo?", "Atención !!!",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                    if (opcion == JOptionPane.YES_OPTION) 
+                    {
+                        Runtime bck = Runtime.getRuntime();
+                        bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=utf8 --hex-blob  --result-file=" + archivo + " --databases "+bd);
+                        JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
+                    } 
+                    else 
+                    {
+                        System.out.println("Ups, algo no salió bien");
+                    }
+                }
+                else 
+                {
+                    Runtime bck = Runtime.getRuntime();
+                    bck.exec("C:/Program Files/MySQL/MySQL Server 5.6/bin/mysqldump.exe -v -v -v --host=localhost --user=root --password=root --port=3306 --protocol=tcp --force --allow-keywords --compress  --add-drop-table --default-character-set=utf8 --hex-blob  --result-file=" + archivo + " --databases "+bd);
+                    JOptionPane.showMessageDialog(null, "Respaldo realizado exitosamente.", "Mensaje:", 1);
+                }
+            }
+        } 
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e, "Error !", 2);
+        }    
+    }
+    
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

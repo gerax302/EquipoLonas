@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import Respaldar.*;
 
 /**
  * @author Gerardo
@@ -19,7 +20,7 @@ public class PanelAjustes extends javax.swing.JPanel
 {
     String cadena = "";
     Boolean bandera;
-
+    Ventana backup = new Ventana();
 
     public PanelAjustes() 
     {
@@ -141,6 +142,8 @@ public class PanelAjustes extends javax.swing.JPanel
         labelEst16 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         cajaColonia = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         panelDescuentos = new javax.swing.JPanel();
         cajaDescGral = new javax.swing.JTextField();
@@ -297,8 +300,8 @@ public class PanelAjustes extends javax.swing.JPanel
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel18.setText("IVA:");
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 150, 20));
+        jLabel18.setText("Respaldar información:");
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 30, 150, 20));
 
         cajaIVA.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -323,7 +326,20 @@ public class PanelAjustes extends javax.swing.JPanel
         });
         jPanel1.add(cajaColonia, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 190, -1));
 
-        PanelDatosAjustes.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 750, 330));
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel20.setText("IVA:");
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 150, 20));
+
+        jButton1.setText("Crear Respaldo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 30, -1, -1));
+
+        PanelDatosAjustes.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 880, 330));
         jPanel1.getAccessibleContext().setAccessibleName("Datos Generales");
 
         PanelDatosAjustes.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 374, -1, 20));
@@ -396,7 +412,7 @@ public class PanelAjustes extends javax.swing.JPanel
         });
         panelDescuentos.add(cajaDescPersFis, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 60, -1));
 
-        PanelDatosAjustes.add(panelDescuentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 750, 180));
+        PanelDatosAjustes.add(panelDescuentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 880, 180));
 
         javax.swing.GroupLayout panelAjustesLayout = new javax.swing.GroupLayout(panelAjustes);
         panelAjustes.setLayout(panelAjustesLayout);
@@ -681,6 +697,10 @@ public class PanelAjustes extends javax.swing.JPanel
         }
     }//GEN-LAST:event_cajaCorreoKeyTyped
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        backup.generarRespaldo();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Base;
@@ -700,6 +720,7 @@ public class PanelAjustes extends javax.swing.JPanel
     public static javax.swing.JTextField cajaNombreDueno;
     public static javax.swing.JTextField cajaRFC;
     public static javax.swing.JTextField cajaTelefono;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -710,6 +731,7 @@ public class PanelAjustes extends javax.swing.JPanel
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
