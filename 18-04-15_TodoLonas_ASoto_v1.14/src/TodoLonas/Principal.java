@@ -247,6 +247,8 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+        Productos.PanelProductos p = new Productos.PanelProductos();
+        p.updateDatos();
         cardLayout.show(panelContenedor, "producto");
         Productos.PanelProductos.labelRegresarProductos.setVisible(false);
     }//GEN-LAST:event_btnProductosActionPerformed

@@ -148,7 +148,7 @@ public class ConexionProducto {
         return rsu;
     }
    
-   public static int actualizarCliente(Modelo cl)
+   public static int actualizar(Modelo cl)
     {
         int rsu = 0;
         String sql = Modelo.UPDATE_CON_FOTO;

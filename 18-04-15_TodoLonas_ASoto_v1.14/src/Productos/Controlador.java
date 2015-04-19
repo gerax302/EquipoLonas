@@ -17,7 +17,7 @@ public class Controlador {
      
      public int actualizar(Modelo cl)
      {
-        return ConexionProducto.actualizarCliente(cl);
+        return ConexionProducto.actualizar(cl);
      }
      
      public int eliminarProducto(Integer pk)

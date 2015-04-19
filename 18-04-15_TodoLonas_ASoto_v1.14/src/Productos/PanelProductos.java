@@ -23,6 +23,12 @@ public class PanelProductos extends javax.swing.JPanel {
     private Productos.Modelo cl;
     private String rutaImagenPorDefault = "/Imagenes/noDisponible.gif";
 
+    public void updateDatos()
+    {
+        cc = new Controlador();
+        tablaDatosProducto.setModel(new TableModelProducto(cc.getProductos()));
+    }
+    
     public PanelProductos() {
         initComponents();
 //        labelRegresarProductos.setVisible(false);
