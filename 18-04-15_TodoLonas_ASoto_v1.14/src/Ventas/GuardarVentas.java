@@ -128,10 +128,31 @@ public class GuardarVentas {
                         + "'" + cantidad[i] + "',"
                         + "'" + importe[i] + "'"
                         + ");");
+                spUpdateCantidadProducto(idProducto[i]+"", cantidad[i]+"");
             }
             conexion.close();
         } catch (Exception e) {
             System.out.println("error en guardar detalle    " + e);
         }
     }
+    
+    public static void spUpdateCantidadProducto(String clave, String cantidad) 
+    {
+        try 
+        {
+            Connection con = null;
+            Class.forName("org.gjt.mm.mysql.Driver");
+            con = (Connection) DriverManager.getConnection(url, login, password);
+            stm = (Statement) con.createStatement();
+            stm.executeUpdate("CALL  actualizaCantidadProducto("
+                    + "'" + clave + "',"
+                    + "'" + cantidad + "'"
+                    + ");"); 
+        } 
+        catch (Exception ex) 
+        {
+            System.out.println("Error en el procedimiento almacenado");
+        }
+    }
+    
 }

@@ -25,13 +25,14 @@ public class PanelProductos extends javax.swing.JPanel {
 
     public void updateDatos()
     {
+        ConexionProducto.conectar();
         cc = new Controlador();
         tablaDatosProducto.setModel(new TableModelProducto(cc.getProductos()));
     }
     
     public PanelProductos() {
         initComponents();
-//        labelRegresarProductos.setVisible(false);
+        //labelRegresarProductos.setVisible(false);
         cc = new Controlador();
         tablaDatosProducto.setModel(new TableModelProducto(cc.getProductos()));
         tablaDatosProducto.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -424,7 +425,6 @@ public class PanelProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_bntNuevoActionPerformed
 
     private void bntActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntActualizarActionPerformed
-
         if (cl != null) {
             cl.setCategoriaProducto(comboCategoriaPro.getSelectedItem().toString());
             cl.setNombreProducto(cajaNombrePro.getText());
@@ -454,7 +454,6 @@ public class PanelProductos extends javax.swing.JPanel {
 
     private void bntGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntGrabarActionPerformed
         Productos.Modelo cl = new Productos.Modelo();
-
         if (!cajaNombrePro.getText().isEmpty() && !cajaCantProd.getText().isEmpty() && !cajaPrecUnit.getText().isEmpty()) {
             cl.setCategoriaProducto(comboCategoriaPro.getSelectedItem().toString());
             cl.setNombreProducto(cajaNombrePro.getText());

@@ -53,7 +53,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder title="Agregar Producto">
-              <Font PropertyName="font" name="Arial" size="18" style="1"/>
+              <Font PropertyName="font" name="Arial" size="14" style="1"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -154,21 +154,22 @@
               <Font name="Arial" size="12" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="14">
+              <StringArray count="15">
                 <StringItem index="0" value="Todos"/>
                 <StringItem index="1" value="Gran Formato"/>
                 <StringItem index="2" value="Vinil"/>
                 <StringItem index="3" value="Alta Resoluci&#xf3;n"/>
                 <StringItem index="4" value="Offset"/>
                 <StringItem index="5" value="Impresi&#xf3;n Digital"/>
-                <StringItem index="6" value="Rigidos"/>
+                <StringItem index="6" value="R&#xed;gidos"/>
                 <StringItem index="7" value="Rotulaci&#xf3;n"/>
-                <StringItem index="8" value="Estructuras"/>
-                <StringItem index="9" value="Lonas"/>
-                <StringItem index="10" value="Dise&#xf1;o Grafico"/>
-                <StringItem index="11" value="Toldos"/>
-                <StringItem index="12" value="Art&#xed;culos Promocionales"/>
-                <StringItem index="13" value="Otros"/>
+                <StringItem index="8" value="Papeler&#xed;a"/>
+                <StringItem index="9" value="Estructuras"/>
+                <StringItem index="10" value="Lonas"/>
+                <StringItem index="11" value="Dise&#xf1;o Gr&#xe1;fico"/>
+                <StringItem index="12" value="Toldos"/>
+                <StringItem index="13" value="Art&#xed;culos Promocionales"/>
+                <StringItem index="14" value="Otros"/>
               </StringArray>
             </Property>
           </Properties>
@@ -195,7 +196,7 @@
               <Image iconType="3" name="/Imagenes/addProd.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Por defecto"/>
+              <Color id="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -219,7 +220,7 @@
               <Image iconType="3" name="/Imagenes/addVent.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Por defecto"/>
+              <Color id="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -311,7 +312,7 @@
                       </TableColumnModel>
                     </Property>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor Por defecto"/>
+                      <Color id="Default Cursor"/>
                     </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -335,7 +336,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder title="Ventas">
-              <Font PropertyName="font" name="Arial" size="18" style="1"/>
+              <Font PropertyName="font" name="Arial" size="14" style="1"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -351,17 +352,16 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboCliente" min="-2" pref="166" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="botonPedidos" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
-                          <Component id="fechaSistema" min="-2" pref="191" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="comboCliente" min="-2" pref="166" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          <Component id="botonPedidos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jLabel9" min="-2" pref="58" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="fechaSistema" min="-2" pref="70" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
@@ -397,17 +397,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel7" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="fechaSistema" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="botonPedidos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel9" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="botonPedidos" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="fechaSistema" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
@@ -460,7 +463,7 @@
               </StringArray>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Por defecto"/>
+              <Color id="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -473,8 +476,9 @@
         <Component class="javax.swing.JLabel" name="fechaSistema">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="24" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -589,7 +593,7 @@
               <Image iconType="3" name="/Imagenes/cancelarVenta.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Por defecto"/>
+              <Color id="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -613,7 +617,7 @@
               <Image iconType="3" name="/Imagenes/corteCaja.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Por defecto"/>
+              <Color id="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -637,7 +641,7 @@
               <Image iconType="3" name="/Imagenes/venderProd.png"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor Por defecto"/>
+              <Color id="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -773,6 +777,15 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonPedidosActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel9">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="Fecha:"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
