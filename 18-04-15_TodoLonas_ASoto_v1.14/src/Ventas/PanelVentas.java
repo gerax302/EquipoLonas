@@ -305,7 +305,7 @@ public class PanelVentas extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Clave", "Producto ", "Descripción ", "P/U"
+                "Clave", "Producto ", "Descripción ", "Precio Unitario"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -426,7 +426,7 @@ public class PanelVentas extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Clave", "Producto", "Descripción", "P/U", "Cantidad", "Importe"
+                "Clave", "Producto", "Descripción", "Precio Unitario", "Cantidad", "Importe"
             }
         ) {
             boolean[] canEdit = new boolean [] {

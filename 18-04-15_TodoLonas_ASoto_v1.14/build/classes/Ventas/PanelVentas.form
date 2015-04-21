@@ -284,7 +284,7 @@
                         <Column editable="false" title="Clave" type="java.lang.Object"/>
                         <Column editable="false" title="Producto " type="java.lang.Object"/>
                         <Column editable="false" title="Descripci&#xf3;n " type="java.lang.Object"/>
-                        <Column editable="false" title="P/U" type="java.lang.Object"/>
+                        <Column editable="false" title="Precio Unitario" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -533,7 +533,7 @@
                         <Column editable="false" title="Clave" type="java.lang.Object"/>
                         <Column editable="false" title="Producto" type="java.lang.Object"/>
                         <Column editable="false" title="Descripci&#xf3;n" type="java.lang.Object"/>
-                        <Column editable="false" title="P/U" type="java.lang.Object"/>
+                        <Column editable="false" title="Precio Unitario" type="java.lang.Object"/>
                         <Column editable="false" title="Cantidad" type="java.lang.Object"/>
                         <Column editable="false" title="Importe" type="java.lang.Object"/>
                       </Table>

@@ -95,6 +95,9 @@ public class Cobrar extends javax.swing.JFrame {
 
         cajaPagoCon.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         cajaPagoCon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cajaPagoConKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 cajaPagoConKeyTyped(evt);
             }
@@ -255,9 +258,14 @@ public class Cobrar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobrarActionPerformed
+        if( Double.parseDouble(cajaPagoCon.getText()) - Double.parseDouble(total) < 0 )
+            JOptionPane.showMessageDialog(this, "La cantidad de pago es insuficiente", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
+        else
+        {
             operacionSinAbono();
             GuardarVentas.venta();
             JOptionPane.showMessageDialog(this, "Operación Exitosa", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_botonCobrarActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
@@ -272,7 +280,36 @@ public class Cobrar extends javax.swing.JFrame {
         if (cajaPagoCon.getText().length() >= 5) {
             evt.consume();
         }
+        //Realizar cambio automatico
+//        if(!cajaPagoCon.getText().isEmpty())
+//        {
+//            //double cam = Double.parseDouble(cajaPagoCon.getText()) - cobrar;
+//            //cajaCambio.setText( cam+"" );
+//            
+//            efectivo = Double.parseDouble(cajaPagoCon.getText());
+//            totalCobro = efectivo - cobrar;
+//            cajaCambio.setText("" + totalCobro);
+//            
+//        }
+//        else
+//            cajaCambio.setText("");        
+
     }//GEN-LAST:event_cajaPagoConKeyTyped
+
+    private void cajaPagoConKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaPagoConKeyReleased
+        if(!cajaPagoCon.getText().isEmpty())
+        {
+            //double cam = Double.parseDouble(cajaPagoCon.getText()) - cobrar;
+            //cajaCambio.setText( cam+"" );
+            
+            efectivo = Double.parseDouble(cajaPagoCon.getText());
+            totalCobro = efectivo - cobrar;
+            cajaCambio.setText("" + totalCobro);
+            
+        }
+        else
+            cajaCambio.setText("");
+    }//GEN-LAST:event_cajaPagoConKeyReleased
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
