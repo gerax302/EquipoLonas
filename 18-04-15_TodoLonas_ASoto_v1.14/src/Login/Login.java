@@ -222,7 +222,6 @@ public class Login extends javax.swing.JFrame {
            //hay que posicionarse en el ultimo registro
            rs.last();
             int encontrado=rs.getRow();
-
             if(encontrado==1) // si nos devuelve un registro significa que la autenticacion es correcta y mostramos el formulario
             {
                 this.setVisible(false);

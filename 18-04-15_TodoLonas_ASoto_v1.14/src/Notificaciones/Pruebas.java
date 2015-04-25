@@ -2,9 +2,9 @@ package Notificaciones;
     
 import nicon.notify.core.Notification;
 
-public class PruebasNotificaciones 
+public class Pruebas 
 {
-    public static void mostrarAlerta(String producto, String estado)
+    public static void mostrarAlerta()
     {
         try
         {
@@ -15,7 +15,7 @@ public class PruebasNotificaciones
         }
         catch(Exception e)
         {
-            System.out.println(e.getCause().toString());
+            System.out.println("Error de alerta: "+e.getCause().toString());
         }
     }
     
@@ -23,7 +23,7 @@ public class PruebasNotificaciones
     {
         String prod = "Lona Impresa 20x20";
         String est =  "urgente";
-        mostrarAlerta(prod, est);
+        mostrarAlerta();
     }
     
 }

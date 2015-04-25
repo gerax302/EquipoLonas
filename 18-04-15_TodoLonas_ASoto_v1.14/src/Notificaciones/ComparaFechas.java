@@ -70,7 +70,7 @@ public class ComparaFechas {
     
     public static void main(String[] args)  
     {
-        String fechaParametro = "1/3/2015";
+        String fechaParametro = "22/4/2015";
         
         System.out.println("Fecha Actual: "+fechaActual);
         System.out.println("Fecha Recibe: "+fechaParametro);
