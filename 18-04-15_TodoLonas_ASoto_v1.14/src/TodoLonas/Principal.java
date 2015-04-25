@@ -22,6 +22,7 @@ public class Principal extends javax.swing.JFrame {
 
     public static CardLayout cardLayout;
     public static String usuarioActivo = "";
+    public static String tipoUsuarioActivo = "";
     
     PanelProductos producto = new PanelProductos();
     PanelClientes cliente = new PanelClientes();
@@ -32,7 +33,6 @@ public class Principal extends javax.swing.JFrame {
     PanelCotizacion cotiza = new PanelCotizacion();
     PanelConsultas consultas = new PanelConsultas();
     PanelCorteCaja corte = new PanelCorteCaja();
-    
     
     Logo logo = new Logo();
 

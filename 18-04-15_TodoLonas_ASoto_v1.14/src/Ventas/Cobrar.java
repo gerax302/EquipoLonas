@@ -280,19 +280,7 @@ public class Cobrar extends javax.swing.JFrame {
         if (cajaPagoCon.getText().length() >= 5) {
             evt.consume();
         }
-        //Realizar cambio automatico
-//        if(!cajaPagoCon.getText().isEmpty())
-//        {
-//            //double cam = Double.parseDouble(cajaPagoCon.getText()) - cobrar;
-//            //cajaCambio.setText( cam+"" );
-//            
-//            efectivo = Double.parseDouble(cajaPagoCon.getText());
-//            totalCobro = efectivo - cobrar;
-//            cajaCambio.setText("" + totalCobro);
-//            
-//        }
-//        else
-//            cajaCambio.setText("");        
+
 
     }//GEN-LAST:event_cajaPagoConKeyTyped
 

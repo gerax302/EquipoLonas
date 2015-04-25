@@ -238,6 +238,7 @@ public class PanelVentas extends javax.swing.JPanel {
         cajaTotal = new javax.swing.JTextField();
         botonPedidos = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        btnEliminarProducto = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(62, 64, 149));
         setToolTipText("");
@@ -550,7 +551,7 @@ public class PanelVentas extends javax.swing.JPanel {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(cajaTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         botonPedidos.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -565,6 +566,14 @@ public class PanelVentas extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Fecha:");
+
+        btnEliminarProducto.setBackground(new java.awt.Color(0, 204, 204));
+        btnEliminarProducto.setText("Elim Pro");
+        btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProductoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -592,7 +601,9 @@ public class PanelVentas extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelCancelar)
                             .addComponent(jLabel12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminarProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(labelCorteCaja))
@@ -627,18 +638,21 @@ public class PanelVentas extends javax.swing.JPanel {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelCancelar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelCorteCaja)
-                            .addComponent(labelRealizarVenta))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel16))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelCancelar, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(labelCorteCaja)
+                                    .addComponent(labelRealizarVenta))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel16)))
+                            .addComponent(btnEliminarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -717,6 +731,7 @@ public class PanelVentas extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
             int filas = tablaPedidos.getRowCount();
+
             for (int i = 0; filas > i; i++) {
                 modelo.removeRow(0);
             }
@@ -725,13 +740,18 @@ public class PanelVentas extends javax.swing.JPanel {
             cajaSubtotal.setText("");
             cajaTotal.setText("");
             //JOptionPane.showMessageDialog(this, "Operación Exitosa", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            
         } catch (Exception e) {
             System.out.println("Problema: " + e);
         }
     }//GEN-LAST:event_labelCancelarMouseClicked
 
     private void labelCorteCajaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelCorteCajaMouseClicked
-        cardLayout.show(panelContenedor, "corte");
+        if ( Principal.tipoUsuarioActivo.equals("Administrador") || Principal.tipoUsuarioActivo.equals("administrador") ) {
+            cardLayout.show(panelContenedor, "corte");            
+        }
+        else
+            JOptionPane.showMessageDialog(null, "No tienes los privilegios para realizar esta operación", "Atención:", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_labelCorteCajaMouseClicked
 
     private void labelRealizarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelRealizarVentaMouseClicked
@@ -868,10 +888,12 @@ public class PanelVentas extends javax.swing.JPanel {
         if (valorComboCliente.equals("Seleccionar...")) {
             botonPedidos.setVisible(false);
             comboClienteSeleccionar();
-        } else {
+        } 
+        else {
             botonPedidos.setVisible(true);
             comboClienteNoSeleccionar();
         }
+        
         System.out.println("de" + descuentoAMedida);
         cajaSubtotal.setText("");
         cajaTotal.setText("");
@@ -938,8 +960,49 @@ public class PanelVentas extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cajaBusquedaActionPerformed
 
+    private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
+        try{
+            //Le damos un valor grande a la variable 'agarrado' para evitar tener seleccionado un producto
+            int agarrado = 1000;
+            double calcula, descuento;
+            //definimos que no tenemos un producto seleccionado dentro de esta variable booleana
+            boolean filaSeleccionada=false;
+            //recorremos la tabla para ver si hay un producto seleccionado 
+            for (int i = 0; i < tablaPedidos.getRowCount(); i++) {
+                filaSeleccionada = tablaPedidos.isRowSelected(i);
+                if (filaSeleccionada==true) {
+                    System.out.println("La seleccionada es: "+(i+1));
+                    agarrado=i;
+                    break;
+                }
+            }
+            if (filaSeleccionada==true) {
+                //////////////////////////////////
+                calcula = Double.parseDouble(tablaPedidos.getValueAt(agarrado, 5)+""); 
+                subtotalInicial = subtotalInicial - calcula;
+                cajaSubtotal.setText("" + Math.rint(subtotalInicial * 100) / 100);
+                descuento = descuentoInicial * subtotalInicial;
+                importeInicial = subtotalInicial - descuento;
+                cajaDescuento.setText("" + Math.rint(descuento * 100) / 100);
+                cajaTotal.setText("" + Math.rint(importeInicial * 100) / 100);
+                importeFinal = importeInicial;
+                DefaultTableModel temp = (DefaultTableModel) tablaPedidos.getModel();
+                temp.removeRow(agarrado);
+                ///////////////////////////////////
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Debe Seleccionar Un Producto", "Atención:", JOptionPane.WARNING_MESSAGE);
+                
+        }
+        catch(Exception e)
+        {
+            System.out.println("Erro al tratar de eliminar un producto de la tabla: "+e.getMessage().toString());
+        }
+    }//GEN-LAST:event_btnEliminarProductoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonPedidos;
+    private javax.swing.JButton btnEliminarProducto;
     private javax.swing.JTextField cajaBusqueda;
     public static javax.swing.JTextField cajaDescuento;
     public static javax.swing.JTextField cajaSubtotal;

@@ -80,7 +80,7 @@ public class ConexionProducto {
             return false;
         }
         if(cn != null) {
-             System.out.println("Productos -> Conexion Exitosa.");
+             //System.out.println("Productos -> Conexion Exitosa.");
              return true;
         }
         return false;  

@@ -226,8 +226,12 @@ public class Login extends javax.swing.JFrame {
             if(encontrado==1) // si nos devuelve un registro significa que la autenticacion es correcta y mostramos el formulario
             {
                 this.setVisible(false);
-                TodoLonas.Principal.main(null);
+                String tipo = rs.getNString("tipoUsuario");
                 TodoLonas.Principal.usuarioActivo = usuario;
+                TodoLonas.Principal.tipoUsuarioActivo = tipo;
+                System.out.println("Usuario: "+usuario);
+                System.out.println("Tipo de Usuario: "+tipo);
+                TodoLonas.Principal.main(null);
             }
             else
             {

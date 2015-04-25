@@ -77,7 +77,7 @@ public class ConexionProveedor {
             return false;
         }
         if(cn != null) {
-             System.out.println("Proveedores -> Conexion Exitosa.");
+             //System.out.println("Proveedores -> Conexion Exitosa.");
              return true;
         }
         return false;  

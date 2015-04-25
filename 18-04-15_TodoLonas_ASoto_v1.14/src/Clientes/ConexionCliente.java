@@ -77,7 +77,7 @@ public class ConexionCliente {
             return false;
         }
         if(cn != null) {
-             System.out.println("Clientes -> Conexion Exitosa.");
+             //System.out.println("Clientes -> Conexion Exitosa.");
              return true;
         }
         return false;  

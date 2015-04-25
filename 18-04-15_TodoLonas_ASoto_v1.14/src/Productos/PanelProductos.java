@@ -27,7 +27,10 @@ public class PanelProductos extends javax.swing.JPanel {
     {
         ConexionProducto.conectar();
         cc = new Controlador();
+        TableModelProducto tm = new TableModelProducto();
+        tm.setProductos(cc.getProductos() );        
         tablaDatosProducto.setModel(new TableModelProducto(cc.getProductos()));
+        this.tablaDatosProducto.setEnabled(true);
     }
     
     public PanelProductos() {

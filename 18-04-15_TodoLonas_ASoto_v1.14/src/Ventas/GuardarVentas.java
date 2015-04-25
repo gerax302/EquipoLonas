@@ -2,10 +2,12 @@ package Ventas;
 
 import java.util.Calendar;
 import Conexion.Conexion;
+import Productos.PanelProductos;
 import com.mysql.jdbc.*;
 import java.sql.DriverManager;
 import com.mysql.jdbc.Statement;
 import java.sql.ResultSet;
+import TodoLonas.Principal;
 
 public class GuardarVentas {
 
@@ -148,7 +150,9 @@ public class GuardarVentas {
                     + "'" + clave + "',"
                     + "'" + cantidad + "'"
                     + ");"); 
+            
         } 
+        
         catch (Exception ex) 
         {
             System.out.println("Error en el procedimiento almacenado");
