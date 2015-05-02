@@ -1,6 +1,5 @@
 package Notificaciones;
 
-import Validaciones.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,15 +9,14 @@ import java.util.concurrent.TimeUnit;
 public class ComparaFechas {
 
     public static Calendar cal=Calendar.getInstance();
-    public static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-    
-    public static String fechaActual = cal.get(cal.DATE)+"/"+ (cal.get(cal.MONTH)+1)+"/"+cal.get(cal.YEAR); 
-    public static String hora = cal.get(cal.HOUR_OF_DAY)+":"+cal.get(cal.MINUTE) ;     
+    public static SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+    public static String fechaActual = cal.get(cal.DATE)+"-"+ (cal.get(cal.MONTH)+1)+"-"+cal.get(cal.YEAR); 
+    //public static String hora = cal.get(cal.HOUR_OF_DAY)+":"+cal.get(cal.MINUTE) ;     
       
-    
-    public static int compararFechas(String fechaRecibida)
+    public static String compararFechas(String fechaRecibida)
     {
         int valor = 0;
+        String es = "";
         try 
         {
             Date date1 = format.parse(fechaActual);
@@ -27,40 +25,70 @@ public class ComparaFechas {
             {
                 //Fechas Iguales, mismo día.
                 valor = 0;
+                es = "Igual";
             }
             else
             {
                 if (date2.compareTo(date1) <= 0) 
+                {
                     //Fecha Actual es menor
                     valor = -1;
+                    es = "Menor";
+                }
                 else
-                //Fecha Actual es mayor
+                {
+                    //Fecha Actual es mayor
                     valor = +1;
+                    es = "Mayor";
+                }
             }
         }
         catch(ParseException pe)
         {
             System.out.println("Error al comparar las fechas");
         }
-        return valor;
+        return es;
     }    
     
     public static long diasDiferencia(String fechaRecibida)
     {
-        long valor = 0;
+        long diferencia = 0;
         try
         {
             Date date1 = format.parse(fechaActual);
             Date date2 = format.parse(fechaRecibida); 
-            valor = getDateDiff(date1, date2, TimeUnit.DAYS);        
+            diferencia = getDateDiff(date1, date2, TimeUnit.DAYS);        
         }
         catch(ParseException pe)
         {
-            System.out.println("Houston, tenemos problemas: "+pe);
+            System.out.println("Error al procesar la información... "+pe);
         }
-        return valor;
+        return diferencia;
     }     
     
+    
+    public static String sumaDias(String fechaRecibida)
+    {
+        String fechaConvertida2 = "";
+        Date date2=null;
+        try
+        {
+            Date date1 = format.parse(fechaActual);
+            date2 = format.parse(fechaRecibida);             
+            //Ssumar un día a la fecha actual
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date2); // Configuramos la fecha que se recibe
+            calendar.add(Calendar.DAY_OF_YEAR, 1);  // numero de días a añadir, o restar en caso de días<0
+            date2 = calendar.getTime(); // Devuelve el objeto Date con los nuevos días añadidos 
+            fechaConvertida2 = cal.get(cal.DATE)+"-"+ (cal.get(cal.MONTH)+1)+"-"+cal.get(cal.YEAR); 
+            //Fin codigo para sumar un día a la fecha actual      
+            System.out.println("Fecha Hoy:  "+date1);               
+        }
+        catch (Exception ex) {
+            System.out.println("Error al sumar días");
+        }
+        return date2+"" + "\t"+fechaConvertida2;
+    }
     
     public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) 
     {
@@ -70,17 +98,16 @@ public class ComparaFechas {
     
     public static void main(String[] args)  
     {
-        String fechaParametro = "22/4/2015";
+        String fechaParametro = "1-5-2015";
         
         System.out.println("Fecha Actual: "+fechaActual);
-        System.out.println("Fecha Recibe: "+fechaParametro);
-        
+        System.out.println("Fecha Recibe: "+fechaParametro);        
         System.out.println("");
         
-        System.out.print("Comparando: ");
-        System.out.println(compararFechas(fechaParametro));
+        System.out.println("Comparando: La Fecha Recibida Es "+compararFechas(fechaParametro));
+        System.out.println("");
         
-        System.out.print("Días de diferencia: ");  
-        System.out.println(diasDiferencia(fechaParametro));
+        System.out.print("Días de diferencia: "+diasDiferencia(fechaParametro));
+        System.out.println("");
     }
 }
