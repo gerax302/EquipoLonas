@@ -50,7 +50,7 @@ public class ComparaFechas {
         return es;
     }    
     
-    public static long diasDiferencia(String fechaRecibida)
+    public static int diasDiferencia(String fechaRecibida)
     {
         long diferencia = 0;
         try
@@ -63,7 +63,8 @@ public class ComparaFechas {
         {
             System.out.println("Error al procesar la información... "+pe);
         }
-        return diferencia;
+        int val = Integer.parseInt(diferencia+"");
+        return val;
     }     
     
     
@@ -98,7 +99,7 @@ public class ComparaFechas {
     
     public static void main(String[] args)  
     {
-        String fechaParametro = "1-5-2015";
+        String fechaParametro = "4-5-2015";
         
         System.out.println("Fecha Actual: "+fechaActual);
         System.out.println("Fecha Recibe: "+fechaParametro);        
@@ -107,7 +108,8 @@ public class ComparaFechas {
         System.out.println("Comparando: La Fecha Recibida Es "+compararFechas(fechaParametro));
         System.out.println("");
         
-        System.out.print("Días de diferencia: "+diasDiferencia(fechaParametro));
+        //System.out.print("Días de diferencia: "+diasDiferencia(fechaParametro));
+        System.out.print("Retorna: "+diasDiferencia(fechaParametro));
         System.out.println("");
     }
 }

@@ -361,6 +361,9 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         cardLayout.show(panelContenedor, "consultas");
         
+        Notificaciones.ConsultaRegistros.buscaUrgentes();
+        Notificaciones.ConsultaRegistros.buscaPedidosProximos();
+        
         btnVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnProductos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnClientes.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);

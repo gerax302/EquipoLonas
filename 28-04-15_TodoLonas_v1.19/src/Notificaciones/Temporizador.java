@@ -3,7 +3,7 @@ package Notificaciones;
 import java.util.Timer;
 import java.util.TimerTask;
 
-class TimerEx 
+class Temporizador 
 { 
     
     public static void main(String arglist[]) 

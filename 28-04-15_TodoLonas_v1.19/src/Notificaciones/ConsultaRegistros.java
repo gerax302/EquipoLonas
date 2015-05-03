@@ -14,57 +14,79 @@ import javax.swing.JOptionPane;
  */
 public class ConsultaRegistros 
 {
-    public void cargarAjustes()
+    public static void buscaUrgentes()
     {
         Connection con = null;
         try 
         {
+            int conteo = 0;
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://"+Conexion.nombreServidor+":"+Conexion.puerto+"/"+Conexion.nombreBD;
             con = DriverManager.getConnection(url, Conexion.usuarioBD, Conexion.contrasena);
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from ajustes");
+            String est = "Urgente";
+            String consulta = "select numeroPedido, estatus from todolonas.pedidos where estatus ='" + est + "';";
+            ResultSet rs = st.executeQuery(consulta);
             while(rs.next())
             {
-                //Para poner en cajas editables
-                //cajaNombreDueno.setText(rs.getString("nombre"));
+                //System.out.println("NumeroPedido: " + rs.getInt("numeroPedido") +  rs.getString("estatus") +"   " );
+                conteo+=1;
             }            
+            if (conteo>0) {
+                GeneraNotificaciones.mostrarAlerta();
+            }
         } 
         catch (ClassNotFoundException | SQLException e) 
         {
-            System.out.println("Error: "+e.getMessage());
+            System.out.println("Error al buscar pedidos urgentes: "+e.getMessage());
         }        
     }
     
-    public void actualiza()
+    public static void buscaPedidosProximos()
     {
         Connection con = null;
         try 
         {
+            int conteo = 0;
+            boolean MenosDeTresDias = false;
+            boolean yaPasoSuFecha = false;
+            boolean todoBien = false;
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://"+Conexion.nombreServidor+":"+Conexion.puerto+"/"+Conexion.nombreBD;
             con = DriverManager.getConnection(url, Conexion.usuarioBD, Conexion.contrasena);
-            String query = "UPDATE  ajustes SET "+
-            "nombre = ? ,           leyendaCotizacion = ?,          RFC = ?, "+
-            "domicilioNegocio = ?,  correoNegocio = ?,              numeroCelular = ?, "+
-            "telefonoNegocio = ?,   descuentoPersonasFisicas = ?,   descuentoInstitucionesPublicas = ?, "+
-            "descuentoEmpresa = ?,  descuentoClienteGeneral = ?, iva = ?, colonia=? where pk =1";
-            PreparedStatement ps;
-            ps = con.prepareStatement(query);
-            //ps.setString(1, cajaNombreDueno.getText());
-            //ps.setString(2, cajaCotizacion.getText());
-            ps.executeUpdate();            
-            //rsu=ps.executeUpdate();            
-            if(ps.executeUpdate() == 1)
-                JOptionPane.showMessageDialog(null, "Operación Exitosa", "Mensaje:", JOptionPane.INFORMATION_MESSAGE);
+            Statement st = con.createStatement();
+            String est = "Urgente";
+            String consulta = "select numeroPedido, fechaEntrega from todolonas.pedidos ";
+            ResultSet rs = st.executeQuery(consulta);
+            //Recorremos el resultset obtenid
+            while(rs.next())
+            {
+                System.out.println("NumeroPedido: " + rs.getInt("numeroPedido") +"   "+  rs.getString("fechaEntrega") +"   " );
+                if ( ComparaFechas.diasDiferencia(rs.getString("fechaEntrega")) < 0)
+                    yaPasoSuFecha=true;
+                if ( ComparaFechas.diasDiferencia(rs.getString("fechaEntrega")) >1 &&  ComparaFechas.diasDiferencia(rs.getString("fechaEntrega")) <3)                   
+                    MenosDeTresDias=true;
+            }   
+            if ( yaPasoSuFecha==false && MenosDeTresDias==false )
+            {
+                todoBien=true;
+                GeneraNotificaciones.bien();
+            }
             else
-                JOptionPane.showMessageDialog(null, "Operación Fallida", "Mensaje:", JOptionPane.ERROR_MESSAGE);
-            cargarAjustes();
-            con.close();
+            {
+                if (yaPasoSuFecha==true) 
+                {
+                    GeneraNotificaciones.retrasados();
+                }
+                if (MenosDeTresDias==true) 
+                {
+                    GeneraNotificaciones.porFecha();
+                }
+            }
         } 
         catch (ClassNotFoundException | SQLException e) 
         {
-            System.out.println("Error: "+e.getMessage());
+            System.out.println("Error al comparar fechas en pedidos: "+e.getMessage());
         }        
     }    
 }
