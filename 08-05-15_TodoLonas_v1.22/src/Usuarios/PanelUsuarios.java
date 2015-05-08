@@ -414,21 +414,53 @@ public class PanelUsuarios extends javax.swing.JPanel {
     }//GEN-LAST:event_bntGrabarActionPerformed
 
     private void bntEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEliminarActionPerformed
-        int op = JOptionPane.showConfirmDialog(null, "¿Realmente desea eliminar el usuario?", "Advertencia", JOptionPane.YES_NO_OPTION);
-        if (op == JOptionPane.NO_OPTION) {
-        }
-        if (op == JOptionPane.YES_OPTION) {
-            if (cl != null) {
-                int eliminarCliente = cc.eliminar(cl.getPrimaryKey());
-                if (eliminarCliente != 0) {
-                    JOptionPane.showMessageDialog(this, "Operación Exitosa", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
-                    tablaUsuarios.setModel(new TableModelUsuarios(cc.getAll()));
+        //Recorremos la tabla para obtener la fila seleccionada y el idCorrespondiente a ese usuario
+        boolean filaSeleccionada = false;
+        int agarrado=1000;  
+        boolean esAdmin=false;
+        try
+        {
+            //Recorremos la tabla para ver si hay un usuario seleccionado
+            for (int i = 0; i < tablaUsuarios.getRowCount(); i++) {
+                filaSeleccionada = tablaUsuarios.isRowSelected(i);
+                if (filaSeleccionada == true) {
+                    agarrado = i;
+                    break;
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Primero debe seleccionar un usuario", "Mensaje: ", JOptionPane.WARNING_MESSAGE);
             }
+            if (filaSeleccionada == true) {
+                //Si esa fila corresponde al id 1 (Administrador Default por defecto) no permitir borrarlo
+                if (Integer.parseInt(tablaUsuarios.getValueAt(agarrado, 0).toString()) == 1) 
+                {
+                    cl=null;
+                    esAdmin=true;
+                }
+                //Nos pregunta si deseamos eliminar al usuario
+                int op = JOptionPane.showConfirmDialog(null, "¿Realmente desea eliminar al usuario?", "Advertencia", JOptionPane.YES_NO_OPTION);
+                if (op == JOptionPane.NO_OPTION) {
+                    //Simplemente no hace nada
+                }
+                if ( op == JOptionPane.YES_OPTION  ) {
+                    if (esAdmin==true) {
+                        JOptionPane.showMessageDialog(this, "No se puede borrar al usuario principal", "Mensaje: ", JOptionPane.WARNING_MESSAGE);
+                    }
+                    if (cl != null) {
+                        int eliminarCliente = cc.eliminar(cl.getPrimaryKey());
+                        if (eliminarCliente != 0) {
+                            JOptionPane.showMessageDialog(this, "Operación Exitosa", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
+                            tablaUsuarios.setModel(new TableModelUsuarios(cc.getAll()));
+                        }
+                    } 
+                }
+            } 
+            else {
+                JOptionPane.showMessageDialog(null, "Debe Seleccionar Un Usuario", "Atención:", JOptionPane.WARNING_MESSAGE);
+            }        
         }
-        this.tablaUsuarios.setEnabled(true);
+        catch (Exception ex) {
+            System.out.println("Error al intentar seleccionar el valor de la tabla usuarios");
+        }
+        this.tablaUsuarios.setEnabled(true);       
     }//GEN-LAST:event_bntEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
