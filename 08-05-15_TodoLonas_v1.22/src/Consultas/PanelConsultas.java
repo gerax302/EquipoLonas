@@ -19,8 +19,9 @@ import net.proteanit.sql.DbUtils;
 
 public class PanelConsultas extends javax.swing.JPanel {
 
-    DefaultTableModel modelo = new DefaultTableModel();
-
+    //MODELO DE LA TABLA 
+    public static DefaultTableModel modelo = new DefaultTableModel();
+    
     //REALIZAR CONEXION A LA BASE DE DATOS 
     public static String url = "jdbc:mysql://" + Conexion.nombreServidor + ":" + Conexion.puerto + "/" + Conexion.nombreBD;
     public static Connection con;
@@ -34,10 +35,10 @@ public class PanelConsultas extends javax.swing.JPanel {
     public static int numeroCabezeras;//= nombreColumnasVentasCliente.length;
 
     // CONSULTAS EN LA BASE DE DATOS
-    public static String sqlClientes = "select nombreCliente from cliente";
-    public static String sqlUsuarios = "select nombreUsuario from usuario";
+    public static String sqlClientes = "select nombreCliente from cliente order by nombreCliente asc";
+    public static String sqlUsuarios = "select nombreUsuario from usuario order by nombreUsuario asc";
     public static String sqlPedidos = "SELECT numeroPedido, nombreUsuario, nombreCliente,especificacionTrabajo, especificacionDiseno, "
-            + "fechaSistema, fechaEntrega,horaSistema, estatus, formaPago, total, anticipo FROM pedidos order by numeroPedido asc";
+            + "fechaSistema, fechaEntrega,horaSistema, estatus, formaPago, total, anticipo FROM pedidos WHERE estatus not in('Pagado') order by numeroPedido desc";
     public static String sqlActualizaEstatus = "UPDATE pedidos SET estatus=? WHERE numeroPedido=?";
     public static String sqlConsultaCategoria = "", sqlConsultaEventoBoton = "", sqlClientesID = "";
 
@@ -46,16 +47,16 @@ public class PanelConsultas extends javax.swing.JPanel {
     public String obtieneCategoria = "", obtieneCliente = "", obtieneUsuario = "";
 
     public static String sqlActualizaAnticipo = "UPDATE pedidos SET anticipo=anticipo+? WHERE numeroPedido=?";
-    
+
     //VARIABLE PARA DETECTAR LA SELECCION DEL ANTICIPO Y ASI PODER IMPRIMIR ESOS DATOS
     public static int seleccion;
-    
+
     public PanelConsultas() throws SQLException {
         initComponents();
         conecta();
         agregarUsuarioCombo();
         agregarClienteCombo();
-        agregarPedidosTabla(); 
+        agregarPedidosTabla();
     }
 
     //FUNCIONAL----- METODO QUE CONECTA A LA BASE DE DATOS 
@@ -107,7 +108,7 @@ public class PanelConsultas extends javax.swing.JPanel {
                 tablaMostrarConsulta.getColumnModel().getColumn(n).setHeaderValue(nombreColumnasPedidos[n]);
             }
         } catch (Exception e) {
-           // JOptionPane.showMessageDialog(null, e);
+            // JOptionPane.showMessageDialog(null, e);
         }
 
     }
@@ -267,15 +268,14 @@ public class PanelConsultas extends javax.swing.JPanel {
             obtieneCategoriaProductoCombo = comboCategoriaBusqueda.getSelectedItem().toString();
 
             if (obtieneCategoriaProductoCombo.equals("Ventas")) {
-                sqlConsultaCategoria = "SELECT numeroVenta, nombreUsuario, nombreCliente, fechaSistema, horaSistema, formaPago, total FROM venta";
+                sqlConsultaCategoria = "SELECT numeroVenta, nombreUsuario, nombreCliente, fechaSistema, horaSistema, formaPago, total FROM venta order by numeroVenta desc";
                 bandera = 1;
             } else if (obtieneCategoriaProductoCombo.equals("Pedidos")) {
-                sqlConsultaCategoria = "SELECT numeroPedido, nombreUsuario, nombreCliente,especificacionTrabajo, especificacionDiseno,fechaSistema, fechaEntrega, horaSistema, estatus, formaPago, total, anticipo FROM pedidos";
-                //mesajeConsulta="Resultados de Pedidos";
+                sqlConsultaCategoria = "SELECT numeroPedido, nombreUsuario, nombreCliente,especificacionTrabajo, especificacionDiseno,fechaSistema, fechaEntrega, horaSistema, estatus, formaPago, total, anticipo FROM pedidos WHERE estatus not in ('Pagado') order by numeroPedido asc";
                 bandera = 2;
             } else if (obtieneCategoriaProductoCombo.equals("Cotizaciones")) {
                 comboUsuario.setEnabled(false);
-                sqlConsultaCategoria = "SELECT cotizacion.numero, cliente.nombreCliente, cotizacion.especificacionTrabajo, cotizacion.fecha, cotizacion.descuento, cotizacion.subtotal, cotizacion.total FROM cotizacion, cliente WHERE cotizacion.idCliente = cliente.idCliente";
+                sqlConsultaCategoria = "SELECT cotizacion.numero, cliente.nombreCliente, cotizacion.especificacionTrabajo, cotizacion.fecha, cotizacion.descuento, cotizacion.subtotal, cotizacion.total FROM cotizacion, cliente WHERE cotizacion.idCliente = cliente.idCliente order by cotizacion.numero asc";
                 bandera = 3;
             } else if (obtieneCategoriaProductoCombo.equals("Seleccionar...")) {
                 JOptionPane.showMessageDialog(null, "Seleccione una categoría", "IMPORTANTE:", JOptionPane.WARNING_MESSAGE);
@@ -294,6 +294,7 @@ public class PanelConsultas extends javax.swing.JPanel {
                 for (int n = 0; n < nombreColumnasPedidos.length; n++) {
                     tablaMostrarConsulta.getColumnModel().getColumn(n).setHeaderValue(nombreColumnasPedidos[n]);
                 }
+                
             } else if (bandera == 3) {
                 for (int n = 0; n < nombreColumnasCotizaciones.length; n++) {
                     tablaMostrarConsulta.getColumnModel().getColumn(n).setHeaderValue(nombreColumnasCotizaciones[n]);
@@ -301,8 +302,8 @@ public class PanelConsultas extends javax.swing.JPanel {
             }
             bandera = 0;
         } catch (SQLException e) {
-        //    JOptionPane.showMessageDialog(null, "Error al buscar [x]  " + e);
-            System.out.println("ERROR COMBO CATE BUSQUEDA "+e);
+            //    JOptionPane.showMessageDialog(null, "Error al buscar [x]  " + e);
+            System.out.println("ERROR COMBO CATE BUSQUEDA " + e);
         }
     }//GEN-LAST:event_comboCategoriaBusquedaItemStateChanged
 
@@ -337,7 +338,7 @@ public class PanelConsultas extends javax.swing.JPanel {
             else if (obtieneCategoria.equals("Pedidos") && !obtieneCliente.equals("Seleccionar...") && !obtieneUsuario.equals("Seleccionar...")) {
                 sqlConsultaEventoBoton = "SELECT numeroPedido, nombreUsuario, nombreCliente, especificacionTrabajo, especificacionDiseno, fechaSistema, fechaEntrega, horaSistema, estatus, formaPago, total, anticipo FROM pedidos WHERE  nombreCliente='" + obtieneCliente + "' AND nombreUsuario='" + obtieneUsuario + "'";
                 numeroCabezeras = nombreColumnasPedidos.length;
-                mesajeConsulta = "CategorÃ­a :" + obtieneCategoria + "   Usuario: " + obtieneUsuario + "   Cliente: " + obtieneCliente + "";
+                mesajeConsulta = "Categoría :" + obtieneCategoria + "   Usuario: " + obtieneUsuario + "   Cliente: " + obtieneCliente + "";
                 bandera = 2;
             } // BUSQUEDA PEDIDOS Y CLIENTE 
             else if (obtieneCategoria.equals("Pedidos") && !obtieneCliente.equals("Seleccionar...")) {
@@ -351,7 +352,7 @@ public class PanelConsultas extends javax.swing.JPanel {
                 bandera = 2;
             } //BUSQUEDA DE COTIZACIONES Y CLIENTE              
             else if (obtieneCategoria.equals("Cotizaciones") && !obtieneCliente.equals("Seleccionar...")) {
-                sqlConsultaEventoBoton = "SELECT numero, nombreCliente, especificacionTrabajo,fecha, descuento, subtotal, total FROM cotizacion INNER JOIN cliente  ON cotizacion.idCliente=cliente.idCliente WHERE cliente.idCliente='" + recibeIdCliente + "' ";
+                sqlConsultaEventoBoton = "SELECT numero, nombreCliente, especificacionTrabajo,fecha, descuento, subtotal, total FROM cotizacion INNER JOIN cliente  ON cotizacion.idCliente=cliente.idCliente WHERE cliente.idCliente='" + recibeIdCliente + "'";
                 numeroCabezeras = nombreColumnasCotizaciones.length;
                 bandera = 3;
             }
@@ -394,6 +395,7 @@ public class PanelConsultas extends javax.swing.JPanel {
             //"Fecha Pedido", "Fecha Entrega", "Hora Pedido", "Estatus", "Forma Pago", "Total", "Anticipo"};
             String estatus, folio, estatusActual, actualizaEstatusTabla;
             int folioSeleccionado;
+            double total, anticipo, importeFinal=0;
 
             if (filaSeleccionadaPedidos == -1) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un pedido", "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -401,14 +403,28 @@ public class PanelConsultas extends javax.swing.JPanel {
                 modelo = (DefaultTableModel) tablaMostrarConsulta.getModel();
                 folioSeleccionado = Integer.parseInt(tablaMostrarConsulta.getValueAt(filaSeleccionadaPedidos, 0).toString());
                 estatus = tablaMostrarConsulta.getValueAt(filaSeleccionadaPedidos, 8).toString();
-                String[] listaEstatus = {"Diseño", "En impresión", "Urgente", "Terminado", "Entregado"};
+                String[] listaEstatus = {"Diseño", "En impresión", "Urgente", "Terminado", "Entregado","Pagado"};
                 JComboBox comboEstatus = new JComboBox(listaEstatus);
-                System.out.println("estatus " + estatus);
-                System.out.println("folio " + folioSeleccionado);
                 JOptionPane.showMessageDialog(null, comboEstatus, "Selecciona el Estatus ", JOptionPane.QUESTION_MESSAGE);
                 System.out.println(comboEstatus.getSelectedItem());
                 estatusActual = (String) comboEstatus.getSelectedItem();
-
+                
+                if (estatusActual.equals("Entregado")  || estatusActual.equals("Pagado")) {
+                    total=Double.parseDouble(tablaMostrarConsulta.getValueAt(filaSeleccionadaPedidos, 10).toString());
+                    anticipo=Double.parseDouble(tablaMostrarConsulta.getValueAt(filaSeleccionadaPedidos, 11).toString());
+                    importeFinal=total-anticipo;
+                    
+                    System.out.println("importe final "+importeFinal);
+                    if (importeFinal==0) {
+                        estatusActual="Pagado";
+                    }
+                    else{
+                        estatusActual="Entregado";
+                    }                            
+                }
+                
+                    
+                
                 pps = con.prepareStatement(sqlActualizaEstatus);
                 pps.setString(1, estatusActual);
                 pps.setInt(2, folioSeleccionado);
@@ -424,7 +440,7 @@ public class PanelConsultas extends javax.swing.JPanel {
     }//GEN-LAST:event_botonEstatusMouseClicked
 
     private void botonAbonosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAbonosActionPerformed
-try {
+        try {
             int filaSeleccionadaPedidos = tablaMostrarConsulta.getSelectedRow();
             seleccion = filaSeleccionadaPedidos;
             System.out.println("SELECCION: " + seleccion);
@@ -432,8 +448,8 @@ try {
             int folioSeleccionado;
             //variabes para la comparacion del anticipo.
             String total;
-            double totalCondicion = 0, anticipoCondicion = 0,totalAntipo = 0;
-            
+            double totalCondicion = 0, anticipoCondicion = 0, totalAntipo = 0;
+
             if (filaSeleccionadaPedidos == -1) {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar un pedido", "Advertencia", JOptionPane.WARNING_MESSAGE);
             } else {
@@ -452,7 +468,7 @@ try {
                 totalCondicion = Double.parseDouble(total);
                 anticipoCondicion = Double.parseDouble(anticipo);
                 totalAntipo = anticipoCondicion + Double.parseDouble(agregaAnticipo);
-                
+
                 if (totalCondicion == totalAntipo) {
                     JOptionPane.showMessageDialog(null, "PAGADO");
                     pps = con.prepareStatement(sqlActualizaAnticipo);
@@ -460,8 +476,7 @@ try {
                     pps.setInt(2, folioSeleccionado);
                     int n = pps.executeUpdate();
                     if (n > 0) {
-                        try
-                        {              
+                        try {
                             JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
                             agregarPedidosTabla();//l momento de agregar un nuevo registro, actualiza la tabla           
                             try {
@@ -470,17 +485,16 @@ try {
                                 Logger.getLogger(PanelConsultas.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         } catch (NullPointerException ex) {
-                        }                    
+                        }
                     }
                 } else if (totalCondicion > totalAntipo) {
-                    
+
                     pps = con.prepareStatement(sqlActualizaAnticipo);
                     pps.setString(1, agregaAnticipo);
                     pps.setInt(2, folioSeleccionado);
                     int n = pps.executeUpdate();
                     if (n > 0) {
-                        try
-                        {              
+                        try {
                             JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
                             agregarPedidosTabla();//l momento de agregar un nuevo registro, actualiza la tabla           
                             try {
