@@ -513,52 +513,72 @@ public class Pedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobrarActionPerformed
-        if (cajaAnticipo.getText().isEmpty())
-            abono=0;
-//        else
-//            abono = Double.parseDouble(cajaAnticipo.getText()); 
-        if (cajaPagoCon.getText().isEmpty())
-            efectivo=0;
-//        else
-//            efectivo = Double.parseDouble(cajaPagoCon.getText());
-        
-        total = Double.parseDouble(labelTotal.getText());
-        efectivo = Double.parseDouble(cajaPagoCon.getText());
-        abono = Double.parseDouble(cajaAnticipo.getText());
-        
-        if (abono < 0) {
-            JOptionPane.showMessageDialog(this, "No tiene abono", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
-        } 
-        else {
-            cambio = efectivo - abono;
-            cobro = efectivo - total - abono;
-            cajaCambio.setText("" + Math.rint(cambio * 100) / 100);
-            GuardarPedidos.pedidos();
-            try
-            {
-                JOptionPane.showMessageDialog(this, "Operación Exitosa", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
-                    try 
-                    {
-                        TicketPedidos.EstructuraTicket.imprime(((DefaultTableModel) Ventas.PanelVentas.tablaPedidos.getModel()).getRowCount());
-                    }
-                    catch (PrintException | IOException ex) {
-                        Logger.getLogger(PanelVentas.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+        //VALIDAR QUE LA FECHA DE ENTREGA SEA IGUAL O MAYOR A LA DEL SISTEMA (HOY)
+        if ( validaFechaEntrega() == true)
+        //FIN VALIDACIÓN FECHA ENTREGA
+        {
+            if (cajaAnticipo.getText().isEmpty())
+                abono=0;
+    //        else
+    //            abono = Double.parseDouble(cajaAnticipo.getText()); 
+            if (cajaPagoCon.getText().isEmpty())
+                efectivo=0;
+    //        else
+    //            efectivo = Double.parseDouble(cajaPagoCon.getText());
+
+            total = Double.parseDouble(labelTotal.getText());
+            efectivo = Double.parseDouble(cajaPagoCon.getText());
+            abono = Double.parseDouble(cajaAnticipo.getText());
+
+            if (abono < 0) {
+                JOptionPane.showMessageDialog(this, "No tiene abono", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
+            } 
+            else {
+                cambio = efectivo - abono;
+                cobro = efectivo - total - abono;
+                cajaCambio.setText("" + Math.rint(cambio * 100) / 100);
+                GuardarPedidos.pedidos();
+                try
+                {
+                    JOptionPane.showMessageDialog(this, "Operación Exitosa", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
+                        try 
+                        {
+                            TicketPedidos.EstructuraTicket.imprime(((DefaultTableModel) Ventas.PanelVentas.tablaPedidos.getModel()).getRowCount());
+                        }
+                        catch (PrintException | IOException ex) {
+                            Logger.getLogger(PanelVentas.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                }
+                catch (NullPointerException ex) {
+                }
+                dispose();
+                PanelVentas.cajaSubtotal.setText("");
+                PanelVentas.cajaDescuento.setText("");
+                PanelVentas.cajaTotal.setText("");
+                DefaultTableModel tabla= (DefaultTableModel)PanelVentas.tablaPedidos.getModel();
+                while(tabla.getRowCount()>0) tabla.removeRow(0);
+                Ventas.PanelVentas.importeFinal=0.0;
+                Ventas.PanelVentas.sumaTotalVenta=0;   
             }
-            catch (NullPointerException ex) {
-            }
-            dispose();
-            PanelVentas.cajaSubtotal.setText("");
-            PanelVentas.cajaDescuento.setText("");
-            PanelVentas.cajaTotal.setText("");
-            DefaultTableModel tabla= (DefaultTableModel)PanelVentas.tablaPedidos.getModel();
-            while(tabla.getRowCount()>0) tabla.removeRow(0);
-            Ventas.PanelVentas.importeFinal=0.0;
-            Ventas.PanelVentas.sumaTotalVenta=0;   
         }
 //       
     }//GEN-LAST:event_botonCobrarActionPerformed
 
+    public boolean validaFechaEntrega(){
+        boolean pasa=true;
+        if( !fechaEntrega.equals("") ){
+            int dia= fechaEntrega.getJCalendar().getDate().getDate();
+            int mes=fechaEntrega.getJCalendar().getDate().getMonth() +1 ;
+            int anio=fechaEntrega.getJCalendar().getDate().getYear()+ 1900; 
+            String fechaParaEntregar = dia+"-"+mes+"-"+anio; 
+            if (Notificaciones.ComparaFechas.diasDiferencia(fechaParaEntregar) < 0) {
+                pasa=false;
+                JOptionPane.showMessageDialog(this, "La fecha de entrega no puede ser menor a la actual", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        return pasa;
+    }
+    
     private void botonAnadirEspecificacionTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAnadirEspecificacionTrabajoActionPerformed
         total = Double.parseDouble(labelTotal.getText());
         precioExtra1 = Double.parseDouble(cajaEspecificacionTrabajo.getText());
