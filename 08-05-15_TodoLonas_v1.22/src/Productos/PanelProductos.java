@@ -23,13 +23,12 @@ public class PanelProductos extends javax.swing.JPanel {
     private Productos.Modelo cl;
     private String rutaImagenPorDefault = "/Imagenes/noDisponible.gif";
 
-    public void updateDatos()
-    {
+    public void updateDatos() {
         ConexionProducto.conectar();
         cc = new Controlador();
         tablaDatosProducto.setModel(new TableModelProducto(cc.getProductos()));
     }
-    
+
     public PanelProductos() {
         initComponents();
         //labelRegresarProductos.setVisible(false);
@@ -498,11 +497,29 @@ public class PanelProductos extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Operación Exitosa", "Mensaje: ", JOptionPane.INFORMATION_MESSAGE);
                     tablaDatosProducto.setModel(new TableModelProducto(cc.getProductos()));
                     this.tablaDatosProducto.setEnabled(true);
+//                    this.comboCategoriaPro.setSelectedIndex(0);
+//                    this.cajaNombrePro.setText("");
+//                    this.cajaCantProd.setText("");
+//                    this.comboUnidadProd.setSelectedIndex(0);
+//                    this.cajaPrecUnit.setText("");
+//                    this.cajaStockMinProd.setText("");
+//                    this.cajaDescripcion.setText("");
+//                    labelFotoProd.setIcon(new CustomImageIcon(getClass().getResource(rutaImagenPorDefault)));
+//                    this.fis = null;
+//                    this.longitudBytes = 0;
+//                    cl = null;
+//                    this.bntGrabar.setEnabled(false);
+//                    bntNuevo.setEnabled(true);
+//                    this.tablaDatosProducto.clearSelection();
+//                    this.bntActualizar.setEnabled(true);
+//                    this.bntEliminar.setEnabled(true);
+//                    this.tablaDatosProducto.setEnabled(true);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Primero debe seleccionar un producto", "Mensaje: ", JOptionPane.WARNING_MESSAGE);
             }
         }
+
     }//GEN-LAST:event_bntEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

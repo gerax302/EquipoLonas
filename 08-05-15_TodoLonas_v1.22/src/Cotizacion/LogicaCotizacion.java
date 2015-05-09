@@ -28,19 +28,23 @@ public class LogicaCotizacion {
     public static String password = Conexion.contrasena;//"280592ssmaylo";
     public static String url = "jdbc:mysql://" + Conexion.nombreServidor + ":" + Conexion.puerto + "/" + Conexion.nombreBD;
     public static DefaultListModel cliente = new DefaultListModel();
+    //variables para obtener los datos de productos y ajustes
     public static int numero;
     public static String producto[];
     public static String precio[];
     public static String cantidad[];
     public static String total[];
     public static String descripcion[];
+    public static String importe[];
+    public static String descuento[];
     public static String nombre, correo, rfc, domicilio;
     public static String telefono, celular, leyenda;
     public static double totalVentas, subtotalVentas;
     public static String var = "", cat = "";
-    public static String descGene, descInst, descEm, descFisi, iva;
+    public static String iva;
     public static String lista, colonia, fecha;
 
+    //busca el cliente
     public static void buscarCliente() {
         cliente.removeAllElements();
         PanelCotizacion.listaCliente.setModel(cliente);
@@ -72,6 +76,7 @@ public class LogicaCotizacion {
         PanelCotizacion.listaCliente.setModel(cliente);
     }
 
+    //muestra los clientes que hay
     public static void mostrarClientes() {
         cliente.removeAllElements();
         PanelCotizacion.listaCliente.setModel(cliente);
@@ -100,6 +105,7 @@ public class LogicaCotizacion {
         PanelCotizacion.listaCliente.setModel(cliente);
     }
 
+    //obtiene los datos de ajustes para mostrarlos en cotizacion y pdf
     public static void metodoObtenerInformacionAjustes() {
         java.sql.Connection con = null;
         try {
@@ -125,6 +131,7 @@ public class LogicaCotizacion {
         }
     }
 
+    //muestra los datos de ajustes a la interfaz
     public static void metodoMostrarInformacionAjustes() {
         String ley = "";
         PanelCotizacion.labelObtenerCelular.setText(celular);
@@ -134,12 +141,10 @@ public class LogicaCotizacion {
         PanelCotizacion.labelObtenerColonia.setText(colonia);
         PanelCotizacion.labelObtenerRFC.setText(rfc);
         PanelCotizacion.labelObtenerATTE.setText(nombre);
-//        ley = PanelCotizacion.areaLeyenda.getText();
-//        if (ley.equals("")) {
         PanelCotizacion.areaLeyenda.setText(leyenda);
-//        }
     }
 
+    //obtiene los datos de ventas
     public static void obtenerDatosVentas() {
         if (Ventas.PanelVentas.tablaPedidos.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "No Hay Productos Para Cotizar", "Atención:", JOptionPane.WARNING_MESSAGE);
@@ -156,12 +161,16 @@ public class LogicaCotizacion {
             while (temp.getRowCount() > 0) {
                 temp.removeRow(0);
             }
+            
             anadirFilas();
             obtenerDatosProducto();
+            obtenerDatosDescripcion();
             obtenerDatosPrecio();
             obtenerDatosCantidad();
-            obtenerDatosDescripcion();
+            obtenerDatosImporte();
+            obtenerDatosDescuento();
             obtenerDatosTotal();
+            
             PanelCotizacion.listaCliente.setEnabled(true);
             PanelCotizacion.cajaBuscarCliente.setEditable(true);
             PanelCotizacion.botonPDF.setEnabled(false);
@@ -173,17 +182,18 @@ public class LogicaCotizacion {
         }
     }
 
+    //anade las filas
     public static void anadirFilas() {
         numero = Ventas.PanelVentas.tablaPedidos.getRowCount();
         System.out.println("numero anadir filas     " + numero);
         DefaultTableModel temp = (DefaultTableModel) PanelCotizacion.tablaProductos.getModel();
-//        if (PanelCotizacion.tablaProductos.getRowCount() == 0) {
         for (int i = 0; i < numero; i++) {
             Object nuevo[] = {"", "", ""};
             temp.addRow(nuevo);
         }
     }
 
+    //obtiene los nombres de los productos
     public static void obtenerDatosProducto() {
         numero = Ventas.PanelVentas.tablaPedidos.getRowCount();
         System.out.println("numero productos     " + numero);
@@ -194,6 +204,17 @@ public class LogicaCotizacion {
         }
     }
 
+    // obtiene la descripcion
+    public static void obtenerDatosDescripcion() {
+        numero = Ventas.PanelVentas.tablaPedidos.getRowCount();
+        descripcion = new String[numero];
+        for (int i = 0; i < numero; i++) {
+            descripcion[i] = "" + Ventas.PanelVentas.tablaPedidos.getValueAt(i, 2);
+            Cotizacion.PanelCotizacion.tablaProductos.setValueAt(descripcion[i], i, 1);
+        }
+    }
+    
+    //obtiene el precio
     public static void obtenerDatosPrecio() {
         numero = Ventas.PanelVentas.tablaPedidos.getRowCount();
         precio = new String[numero];
@@ -203,6 +224,7 @@ public class LogicaCotizacion {
         }
     }
 
+    //obtiene la cantidad
     public static void obtenerDatosCantidad() {
         numero = Ventas.PanelVentas.tablaPedidos.getRowCount();
         cantidad = new String[numero];
@@ -212,24 +234,37 @@ public class LogicaCotizacion {
         }
     }
 
-    public static void obtenerDatosDescripcion() {
+    // obtiene el importe
+    public static void obtenerDatosImporte() {
         numero = Ventas.PanelVentas.tablaPedidos.getRowCount();
-        descripcion = new String[numero];
+        importe = new String[numero];
         for (int i = 0; i < numero; i++) {
-            descripcion[i] = "" + Ventas.PanelVentas.tablaPedidos.getValueAt(i, 2);
-            Cotizacion.PanelCotizacion.tablaProductos.setValueAt(descripcion[i], i, 1);
+            importe[i] = "" + Ventas.PanelVentas.tablaPedidos.getValueAt(i, 5);
+            Cotizacion.PanelCotizacion.tablaProductos.setValueAt(importe[i], i, 4);
         }
     }
 
+    // obtiene la descuento
+    public static void obtenerDatosDescuento() {
+        numero = Ventas.PanelVentas.tablaPedidos.getRowCount();
+        descuento = new String[numero];
+        for (int i = 0; i < numero; i++) {
+            descuento[i] = "" + Ventas.PanelVentas.tablaPedidos.getValueAt(i, 6);
+            Cotizacion.PanelCotizacion.tablaProductos.setValueAt(descuento[i], i, 5);
+        }
+    }
+    
+    //obtiene el total
     public static void obtenerDatosTotal() {
         numero = Ventas.PanelVentas.tablaPedidos.getRowCount();
         total = new String[numero];
         for (int i = 0; i < numero; i++) {
             total[i] = "" + Ventas.PanelVentas.tablaPedidos.getValueAt(i, 7);
-            Cotizacion.PanelCotizacion.tablaProductos.setValueAt(total[i], i, 4);
+            Cotizacion.PanelCotizacion.tablaProductos.setValueAt(total[i], i, 6);
         }
     }
 
+    // hace los calculas para el total el iva
     public static void obtenerDatosOperaciones() {
         double resultado2, descuento = 0, res;
         subtotalVentas = Double.parseDouble(Ventas.PanelVentas.cajaSubtotal.getText());
@@ -240,6 +275,5 @@ public class LogicaCotizacion {
 
         res = (subtotalVentas - (subtotalVentas * descuento)) + resultado2;
         Cotizacion.PanelCotizacion.cajaTotal.setText("" + Math.rint(res * 100) / 100);
-//        importeFinal = totalConDescuentoExtra;
     }
 }

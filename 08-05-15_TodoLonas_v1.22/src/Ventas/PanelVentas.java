@@ -241,7 +241,7 @@ public class PanelVentas extends javax.swing.JPanel {
 
         labelAgregarProducto.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         labelAgregarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imgAnadirProducto.png"))); // NOI18N
-        labelAgregarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        labelAgregarProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelAgregarProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelAgregarProductoMouseClicked(evt);
@@ -253,7 +253,7 @@ public class PanelVentas extends javax.swing.JPanel {
 
         labelAgregarVenta.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         labelAgregarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imgAnadirVenta.png"))); // NOI18N
-        labelAgregarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        labelAgregarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelAgregarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelAgregarVentaMouseClicked(evt);
@@ -392,7 +392,7 @@ public class PanelVentas extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Clave", "Producto", "Descripción", "Precio Unitario", "Cantidad", "Importe", "Descuento", "Total"
+                "Clave", "Producto", "Descripción", "Precio Unitario", "Cantidad", "Importe", "%  Descuento", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -435,7 +435,7 @@ public class PanelVentas extends javax.swing.JPanel {
         labelCancelar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         labelCancelar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imgCancelarVenta.png"))); // NOI18N
-        labelCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        labelCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelCancelarMouseClicked(evt);
@@ -448,7 +448,7 @@ public class PanelVentas extends javax.swing.JPanel {
         labelCorteCaja.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         labelCorteCaja.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelCorteCaja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imgCorteCaja.png"))); // NOI18N
-        labelCorteCaja.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        labelCorteCaja.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelCorteCaja.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelCorteCajaMouseClicked(evt);
@@ -461,7 +461,7 @@ public class PanelVentas extends javax.swing.JPanel {
         labelRealizarVenta.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         labelRealizarVenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelRealizarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imgRealizarVenta.png"))); // NOI18N
-        labelRealizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        labelRealizarVenta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelRealizarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelRealizarVentaMouseClicked(evt);
@@ -494,8 +494,10 @@ public class PanelVentas extends javax.swing.JPanel {
         });
 
         cajaSubtotal.setEditable(false);
+        cajaSubtotal.setText("0");
 
         cajaTotal.setEditable(false);
+        cajaTotal.setText("0");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -557,7 +559,7 @@ public class PanelVentas extends javax.swing.JPanel {
 
         botonEliminarPorFila.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         botonEliminarPorFila.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imgCancelarProducto.png"))); // NOI18N
-        botonEliminarPorFila.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        botonEliminarPorFila.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonEliminarPorFila.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 botonEliminarPorFilaMouseClicked(evt);
@@ -743,9 +745,9 @@ public class PanelVentas extends javax.swing.JPanel {
                 modelo.removeRow(0);
             }
             comboCliente.setSelectedIndex(0);
-            cajaDescuento.setText("");
-            cajaSubtotal.setText("");
-            cajaTotal.setText("");
+            cajaDescuento.setText("0");
+            cajaSubtotal.setText("0");
+            cajaTotal.setText("0");
             //JOptionPane.showMessageDialog(this, "Operación Exitosa", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             System.out.println("Problema: " + e);
@@ -874,33 +876,41 @@ public class PanelVentas extends javax.swing.JPanel {
     private void botonDescuentoPorProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonDescuentoPorProductoMouseClicked
         int filaSeleccionadaPedidos = tablaPedidos.getSelectedRow();
         double importe = 0, descuento = 0, importeConDescuento;
-
+        String validaEntrada = "";
+        boolean bandera;
         if (filaSeleccionadaPedidos == -1) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
             modelo = (DefaultTableModel) tablaPedidos.getModel();
             importe = Double.parseDouble(tablaPedidos.getValueAt(filaSeleccionadaPedidos, 5).toString());
 
-            descuento = Double.parseDouble(JOptionPane.showInputDialog(null, "Ingrese descuento:"));
-
-            if (descuento > 50 || descuento < 0) {
-
-              //  descuento = Double.parseDouble(JOptionPane.showInputDialog(null, "Por favor ingrese descuento válido:"));
-                descuento = 0;
-
-                importeConDescuento = importe * (descuento / 100);
-                importeConDescuento = importe - importeConDescuento;
-                tablaPedidos.setValueAt(Math.rint(descuento * 100) / 100, filaSeleccionadaPedidos, 6);
-                tablaPedidos.setValueAt(Math.rint(importeConDescuento * 100) / 100, filaSeleccionadaPedidos, 7);
-            } //VERIFICACION DEL ANTICIPO
-            else if (descuento <= 50) {
-                importeConDescuento = importe * (descuento / 100);
-                importeConDescuento = importe - importeConDescuento;
-                tablaPedidos.setValueAt(Math.rint(descuento * 100) / 100, filaSeleccionadaPedidos, 6);
-                tablaPedidos.setValueAt(Math.rint(importeConDescuento * 100) / 100, filaSeleccionadaPedidos, 7);
+            bandera = false;
+            while (bandera == false) {
+                String entra = JOptionPane.showInputDialog(null, "Ingresa el descuento", "Atención", JOptionPane.INFORMATION_MESSAGE);
+                if (entra.matches("[0-9]*")) {
+                    bandera = true;
+                    descuento = Double.parseDouble(entra);         
+                }                
             }
+
+            if (bandera = true) {
+                if (descuento > 50 || descuento < 0) {
+                    descuento = 0;
+                    importeConDescuento = importe * (descuento / 100);
+                    importeConDescuento = importe - importeConDescuento;
+                    tablaPedidos.setValueAt(Math.rint(descuento * 100) / 100, filaSeleccionadaPedidos, 6);
+                    tablaPedidos.setValueAt(Math.rint(importeConDescuento * 100) / 100, filaSeleccionadaPedidos, 7);
+                } //VERIFICACION DEL DESCUENTO
+                else if (descuento <= 50) {
+                    importeConDescuento = importe * (descuento / 100);
+                    importeConDescuento = importe - importeConDescuento;
+                    tablaPedidos.setValueAt(Math.rint(descuento * 100) / 100, filaSeleccionadaPedidos, 6);
+                    tablaPedidos.setValueAt(Math.rint(importeConDescuento * 100) / 100, filaSeleccionadaPedidos, 7);
+                }
+                operacionActualizaSubtotal();
+            }
+
         }
-        operacionActualizaSubtotal();
     }//GEN-LAST:event_botonDescuentoPorProductoMouseClicked
 
     private void cajaDescuentoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaDescuentoKeyReleased
@@ -945,7 +955,7 @@ public class PanelVentas extends javax.swing.JPanel {
                 calcula = Double.parseDouble(tablaPedidos.getValueAt(agarrado, 7) + "");
                 subtotalVentas = subtotalVentas - calcula;
                 cajaSubtotal.setText("" + Math.rint(subtotalVentas * 100) / 100);
-                cajaDescuento.setText("0.0");
+                cajaDescuento.setText("0");
                 cajaTotal.setText("" + Math.rint(subtotalVentas * 100) / 100);
                 importeFinal = subtotalVentas;
                 DefaultTableModel temp = (DefaultTableModel) tablaPedidos.getModel();

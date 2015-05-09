@@ -76,6 +76,7 @@ public class ExportarPDF {
     //variabels para el metodo acomodarDatosEspecificaciones
     public static String especificacionTrabajo, especificacionDiseno;
     public static int idCotiza;
+    public static double precio1, precio2;
 
     //variables para el metodo acomodarATTE
     public static String ate, nombre;
@@ -83,6 +84,7 @@ public class ExportarPDF {
     //variables para el metodo acomodarNota
     public static String nota1, leyenda;
 
+    //metodo para el numero de folio y se guarde con el numero
     public static void obtenerNumeroCotizacion() {
         Connection conexion = null;
         try {
@@ -100,6 +102,7 @@ public class ExportarPDF {
         }
     }
 
+    //guarda el pdf con el nombre del cliente, numero de folio y fecha
     public static void guardarPDF() {
         obtenerNumeroCotizacion();
         nombrePDF = PanelCotizacion.labelObtenerNombreCliente.getText();
@@ -123,6 +126,7 @@ public class ExportarPDF {
         }
     }
 
+    //datos necesarios para que se guarde el pdf
     private static void agregarMetaDatos(Document document) {
         document.addTitle("PDF Cliente");
         document.addSubject("Usando iText");
@@ -131,6 +135,7 @@ public class ExportarPDF {
         document.addCreator("Ana Karen Soto");
     }
 
+    // agrega el contenido por partes el pdf
     private static void agregarContenido(Document document) throws DocumentException, Exception {
 
         Paragraph parrafoNormal1 = new Paragraph();
@@ -144,6 +149,7 @@ public class ExportarPDF {
         Paragraph parrafoNormal9 = new Paragraph();
         Paragraph parrafoNormal10 = new Paragraph();
 
+        // llama todos los metodos
         acomodarImagenCabecera(parrafoNormal1);
         acomodarImagenLogo(parrafoNormal1);
         acomodarDatosDerecha(parrafoNormal1);
@@ -157,6 +163,7 @@ public class ExportarPDF {
         acomodarDatosNota(parrafoNormal9);
         acomodarImagenPie(parrafoNormal10);
 
+        // se anade al documento
         document.add(parrafoNormal1);
         document.add(parrafoNormal2);
         document.add(parrafoNormal3);
@@ -169,6 +176,7 @@ public class ExportarPDF {
         document.add(parrafoNormal10);
     }
 
+    // es para la imagen de cabecera
     private static void acomodarImagenCabecera(Paragraph imagen) {
 
         try {
@@ -181,6 +189,7 @@ public class ExportarPDF {
         }
     }
 
+    // acomoda el logo 
     private static void acomodarImagenLogo(Paragraph imagen) throws BadElementException {
         try {
             Image im = Image.getInstance("src/Imagenes/todo Lonas.png");
@@ -191,6 +200,7 @@ public class ExportarPDF {
         }
     }
 
+    // acomoda los datos que estan a la derecha
     private static void acomodarDatosDerecha(Paragraph datosDerecha) throws Exception {
         ciudad = Cotizacion.PanelCotizacion.labelCiudad.getText();
         Connection conexion = null;
@@ -200,7 +210,6 @@ public class ExportarPDF {
 
             stm = (Statement) conexion.createStatement();
 
-//            System.out.println("nombre++++---->      "+nombreCliente);
             ResultSet rs = stm.executeQuery("SELECT * FROM todolonas.ajustes;");
             while (rs.next()) {
                 telefonoNegocio = rs.getString("telefonoNegocio");
@@ -237,10 +246,11 @@ public class ExportarPDF {
 
     }
 
+    // acomoda los datos a la derecha que son fecha, ubicacion asunto
     private static void acomodarDatosDerecha2(Paragraph datosDerecha2) {
         fecha = PanelCotizacion.labelObtenerFecha.getText();
-        ubicacion = PanelCotizacion.cajaAsunto.getText();
-        asunto = PanelCotizacion.cajaUbicacion.getText();
+        asunto = PanelCotizacion.cajaAsunto.getText();
+        ubicacion = PanelCotizacion.cajaUbicacion.getText();
         PdfPTable table2 = new PdfPTable(2);
         table2.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
         table2.addCell("Fecha");
@@ -255,6 +265,7 @@ public class ExportarPDF {
         datosDerecha2.add(table2);
     }
 
+    // acomoda los datos que van en texto normal que es el nombre del cliente y el anexo
     private static void acomodarDatosNormal(Paragraph datosNormal) throws BadElementException {
         nombreCliente = Cotizacion.PanelCotizacion.labelObtenerNombreCliente.getText();
         anexo = Cotizacion.PanelCotizacion.labelAnexo.getText();
@@ -264,8 +275,10 @@ public class ExportarPDF {
         datosNormal.setAlignment(0);
     }
 
+    // acomoda los datos de especificacion de trabajo y diseno
     private static void acomodarDatosEspecificaciones(Paragraph datosNormal) throws BadElementException {
         Connection conexion = null;
+        agregarLineasEnBlanco(datosNormal, 1);
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
             conexion = (Connection) DriverManager.getConnection(url, login, password);
@@ -295,14 +308,28 @@ public class ExportarPDF {
         }
         if (especificacionTrabajo.equals("NA")) {
             System.out.println("no hay especificacion trabajo");
+            precio1 = DatosExtra.precio1;
+            PdfPTable table2 = new PdfPTable(4);
+            table2.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+            table2.addCell("Especificación Trabjo");
+            table2.addCell("");
+            table2.addCell("Precio Especificación");
+            table2.addCell("$   "+precio1);
+            table2.setWidthPercentage(100);
+            table2.setHorizontalAlignment(Element.ALIGN_LEFT);
+////            agregarLineasEnBlanco(datosNormal, 1);
+            datosNormal.add(table2);
         } else {
-            PdfPTable table2 = new PdfPTable(2);
+            precio1 = DatosExtra.precio1;
+            PdfPTable table2 = new PdfPTable(4);
             table2.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
             table2.addCell("Especificación Trabajo");
             table2.addCell(especificacionTrabajo);
-            table2.setWidthPercentage(70);
+            table2.addCell("Precio Especificación");
+            table2.addCell("$   "+precio1);
+            table2.setWidthPercentage(100);
             table2.setHorizontalAlignment(Element.ALIGN_LEFT);
-            agregarLineasEnBlanco(datosNormal, 1);
+//            agregarLineasEnBlanco(datosNormal, 1);
             datosNormal.add(table2);
         }
         try {
@@ -311,7 +338,6 @@ public class ExportarPDF {
 
             stm = (Statement) conexion.createStatement();
 
-//            System.out.println("nombre++++---->      "+nombreCliente);
             ResultSet rs = stm.executeQuery("SELECT especificacionDiseno FROM todolonas.cotizacion where numero = '" + idCotiza + "';");
             while (rs.next()) {
                 especificacionDiseno = rs.getString("especificacionDiseno");
@@ -322,18 +348,33 @@ public class ExportarPDF {
         }
         if (especificacionDiseno.equals("NA")) {
             System.out.println("no hay especificacion trabajo");
+            precio2 = DatosExtra.precio2;
+            PdfPTable table2 = new PdfPTable(4);
+            table2.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+            table2.addCell("Especificación Diseño");
+            table2.addCell("");
+            table2.addCell("Precio Especificación");
+            table2.addCell("$   "+precio2);
+            table2.setWidthPercentage(100);
+            table2.setHorizontalAlignment(Element.ALIGN_LEFT);
+////            agregarLineasEnBlanco(datosNormal, 1);
+            datosNormal.add(table2);
         } else {
-            PdfPTable table2 = new PdfPTable(2);
+            precio2 = DatosExtra.precio2;
+            PdfPTable table2 = new PdfPTable(4);
             table2.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
             table2.addCell("Especificación Diseño");
             table2.addCell(especificacionDiseno);
-            table2.setWidthPercentage(70);
+            table2.addCell("Precio Especificación");
+            table2.addCell("$   "+precio2);
+            table2.setWidthPercentage(100);
             table2.setHorizontalAlignment(Element.ALIGN_LEFT);
-            agregarLineasEnBlanco(datosNormal, 1);
+////            agregarLineasEnBlanco(datosNormal, 1);
             datosNormal.add(table2);
         }
     }
 
+    // crea la tabla de productos
     private static void acomodarDatosTablaProductos(Paragraph subCatPart) throws BadElementException {
         numeroFilas = LogicaCotizacion.numero;
         cantidadTabla = new String[numeroFilas];
@@ -353,7 +394,7 @@ public class ExportarPDF {
         celda.setHorizontalAlignment(Element.ALIGN_CENTER);
         celda.setBackgroundColor(new Color(0, 175, 239));
         tabla.addCell(celda);
-        celda = new PdfPCell(new Paragraph("P/U"));
+        celda = new PdfPCell(new Paragraph("Precio Unitario"));
         celda.setHorizontalAlignment(Element.ALIGN_CENTER);
         celda.setBackgroundColor(new Color(0, 175, 239));
         tabla.addCell(celda);
@@ -374,13 +415,14 @@ public class ExportarPDF {
             tabla.addCell("$  " + precioTabla[i]);
             cantidadTabla[i] = "" + Cotizacion.PanelCotizacion.tablaProductos.getValueAt(i, 3);
             tabla.addCell("   " + cantidadTabla[i]);
-            totalTabla[i] = "" + Cotizacion.PanelCotizacion.tablaProductos.getValueAt(i, 4);
+            totalTabla[i] = "" + Cotizacion.PanelCotizacion.tablaProductos.getValueAt(i, 6);
             tabla.addCell("$  " + totalTabla[i]);
         }
         agregarLineasEnBlanco(subCatPart, 1);
         subCatPart.add(tabla);
     }
 
+    // acomoda el attentamente
     private static void acomodarATTE(Paragraph datosCentro) throws BadElementException {
         ate = PanelCotizacion.labelATE.getText();
         nombre = PanelCotizacion.labelObtenerATTE.getText();
@@ -389,6 +431,7 @@ public class ExportarPDF {
         datosCentro.setAlignment(1);
     }
 
+    // acomoda el subtotal total descuento e iva
     private static void acomodarDatosPreciosTotales(Paragraph datosDerecha2) throws BadElementException {
         subtotal = PanelCotizacion.cajaSubtotal.getText();
         iva = PanelCotizacion.cajaIVA.getText();
@@ -412,6 +455,7 @@ public class ExportarPDF {
         datosDerecha2.add(table2);
     }
 
+    // acomoda la nota que esta en la parte de abajo
     private static void acomodarDatosNota(Paragraph datosNormal2) throws BadElementException {
         nota1 = PanelCotizacion.labelNota1.getText();
         leyenda = PanelCotizacion.areaLeyenda.getText();
@@ -421,6 +465,7 @@ public class ExportarPDF {
         datosNormal2.setAlignment(0);
     }
 
+    // acomoda la firma digital del cliente
     private static void acomodarImagenFirma(Paragraph imagen) throws BadElementException {
         try {
             Image im = Image.getInstance("src/Imagenes/firma3.png");
@@ -433,6 +478,7 @@ public class ExportarPDF {
         }
     }
 
+    // acomoda la imagen que va en el pie de pagina
     private static void acomodarImagenPie(Paragraph imagen) throws BadElementException {
         try {
             Image im = Image.getInstance("src/Imagenes/abajo.png");
@@ -446,6 +492,7 @@ public class ExportarPDF {
         }
     }
 
+    // agrega el salto de linea
     private static void agregarLineasEnBlanco(Paragraph parrafo, int nLineas) {
         for (int i = 0; i < nLineas; i++) {
             parrafo.add(new Paragraph(" "));

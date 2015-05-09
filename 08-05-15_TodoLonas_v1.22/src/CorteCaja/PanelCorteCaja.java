@@ -1021,6 +1021,12 @@ public class PanelCorteCaja extends javax.swing.JPanel
                     {
                         anticipos = "0.0";
                     }
+                    else
+                    {
+                        abono =Double.parseDouble(anticipos);
+                        abono = redondear(abono,2);
+                        anticipos= ""+abono;
+                    }
                 }  
             
                 rs = st.executeQuery("select sum(total) as AlContado from venta where formaPago = 'Al Contado' and fechaSistema = '" + fechaActual +"'");
@@ -1031,6 +1037,12 @@ public class PanelCorteCaja extends javax.swing.JPanel
                     {
                         alContado ="0.0";
                     }
+                    else
+                    {
+                        contado =Double.parseDouble(alContado);
+                        contado = redondear(contado,2);
+                        alContado= ""+contado;
+                    }
                 } 
             
                 rs = st.executeQuery("select sum(total) as Cheques from venta where  formaPago = 'Cheques' and fechaSistema = '" + fechaActual +"'");
@@ -1040,7 +1052,13 @@ public class PanelCorteCaja extends javax.swing.JPanel
                     if(cheques == null)
                     {
                         cheques = "0.0";
-                    }        
+                    }  
+                    else
+                    {
+                        cheque =Double.parseDouble(cheques);
+                        cheque = redondear(cheque,2);
+                        cheques= ""+cheque;
+                    }
                 } 
             
                 rs = st.executeQuery("select sum(total) as Vales from venta where  formaPago = 'Vales' and fechaSistema = '" + fechaActual +"'");
@@ -1050,6 +1068,12 @@ public class PanelCorteCaja extends javax.swing.JPanel
                     if(vales == null)
                     {
                         vales = "0.0";
+                    }
+                    else
+                    {
+                        vale =Double.parseDouble(vales);
+                        vale = redondear(vale,2);
+                        vales= ""+vale;
                     }
                 } 
             } 

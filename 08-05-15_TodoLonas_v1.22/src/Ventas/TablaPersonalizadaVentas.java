@@ -10,13 +10,13 @@ public class TablaPersonalizadaVentas {
     {
         TableColumnModel columnaPedidos = tablaPedidos.getColumnModel();
         columnaPedidos.getColumn(0).setPreferredWidth(5);
-        columnaPedidos.getColumn(1).setPreferredWidth(100);
-        columnaPedidos.getColumn(2).setPreferredWidth(100);
-        columnaPedidos.getColumn(3).setPreferredWidth(10);
-        columnaPedidos.getColumn(4).setPreferredWidth(10);
-        columnaPedidos.getColumn(5).setPreferredWidth(10);
-        columnaPedidos.getColumn(6).setPreferredWidth(5);
-        columnaPedidos.getColumn(7).setPreferredWidth(10);
+        columnaPedidos.getColumn(1).setPreferredWidth(70);
+        columnaPedidos.getColumn(2).setPreferredWidth(70);
+        columnaPedidos.getColumn(3).setPreferredWidth(40);
+        columnaPedidos.getColumn(4).setPreferredWidth(5);
+        columnaPedidos.getColumn(5).setPreferredWidth(15);
+        columnaPedidos.getColumn(6).setPreferredWidth(15);
+        columnaPedidos.getColumn(7).setPreferredWidth(15);
     }
     
     public static void tablaMostrarProductos()

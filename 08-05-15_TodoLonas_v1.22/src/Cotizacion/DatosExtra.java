@@ -12,12 +12,12 @@ public class DatosExtra extends javax.swing.JFrame {
     public DatosExtra() {
         initComponents();
         this.setLocationRelativeTo(null);
-        if (!cajaEspecificacionTrabajo.getText().isEmpty()) {
-            espeTrabajo = areaEspecificacionTrabajo.getText();
-        }
-        if (!cajaEspecificacionDiseno.getText().isEmpty()) {
-            espeDiseno = areaEspecificacionDiseno.getText();
-        }
+//        if (!cajaEspecificacionTrabajo.getText().isEmpty()) {
+//            espeTrabajo = areaEspecificacionTrabajo.getText();
+//        }
+//        if (!cajaEspecificacionDiseno.getText().isEmpty()) {
+//            espeDiseno = areaEspecificacionDiseno.getText();
+//        }
         cajaEspecificacionTrabajo.setText(precio1+"");
         cajaEspecificacionDiseno.setText(precio2+"");
     }
@@ -50,12 +50,22 @@ public class DatosExtra extends javax.swing.JFrame {
         jLabel18.setText("Especificación del Trabajo:");
 
         areaEspecificacionTrabajo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        areaEspecificacionTrabajo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                areaEspecificacionTrabajoKeyTyped(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setText("Precio Extra:");
 
         cajaEspecificacionTrabajo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         cajaEspecificacionTrabajo.setText("0");
+        cajaEspecificacionTrabajo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaEspecificacionTrabajoKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -94,11 +104,22 @@ public class DatosExtra extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel19.setText("Especificación del Diseño:");
 
+        areaEspecificacionDiseno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                areaEspecificacionDisenoKeyTyped(evt);
+            }
+        });
+
         jLabel7.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel7.setText("Precio Extra:");
 
         cajaEspecificacionDiseno.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         cajaEspecificacionDiseno.setText("0");
+        cajaEspecificacionDiseno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cajaEspecificacionDisenoKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -213,11 +234,17 @@ public class DatosExtra extends javax.swing.JFrame {
 
     private void btnAgregarPrecioExtraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPrecioExtraActionPerformed
         // TODO add your handling code here:
-        if (!cajaEspecificacionTrabajo.getText().isEmpty()) {
+        if (!areaEspecificacionTrabajo.getText().isEmpty()) {
             espeTrabajo = areaEspecificacionTrabajo.getText();
         }
-        if (!cajaEspecificacionDiseno.getText().isEmpty()) {
+        else{
+            espeTrabajo = "NA";
+        }
+        if (!areaEspecificacionDiseno.getText().isEmpty()) {
             espeDiseno = areaEspecificacionDiseno.getText();
+        }
+        else{
+            espeDiseno = "NA";
         }
         precio1 = Double.parseDouble(cajaEspecificacionTrabajo.getText());
         precio2 = Double.parseDouble(cajaEspecificacionDiseno.getText());
@@ -244,6 +271,44 @@ public class DatosExtra extends javax.swing.JFrame {
         PanelCotizacion.cajaSubtotal.setText(""+resultado);
         dispose();
     }//GEN-LAST:event_btnCancelarPrecioExtraActionPerformed
+
+    private void cajaEspecificacionTrabajoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaEspecificacionTrabajoKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) && (caracter != evt.VK_BACK_SPACE) && (caracter != '.')) {
+            evt.consume();
+        }
+        if (cajaEspecificacionTrabajo.getText().length() >= 7) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaEspecificacionTrabajoKeyTyped
+
+    private void cajaEspecificacionDisenoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaEspecificacionDisenoKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) && (caracter != evt.VK_BACK_SPACE) && (caracter != '.')) {
+            evt.consume();
+        }
+        if (cajaEspecificacionDiseno.getText().length() >= 7) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_cajaEspecificacionDisenoKeyTyped
+
+    private void areaEspecificacionTrabajoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaEspecificacionTrabajoKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (areaEspecificacionTrabajo.getText().length() >= 250) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_areaEspecificacionTrabajoKeyTyped
+
+    private void areaEspecificacionDisenoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaEspecificacionDisenoKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (areaEspecificacionDiseno.getText().length() >= 250) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_areaEspecificacionDisenoKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static java.awt.TextArea areaEspecificacionDiseno;

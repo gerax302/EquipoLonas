@@ -604,6 +604,10 @@ public class PanelAjustes extends javax.swing.JPanel
 
     private void cajaCotizacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaCotizacionKeyTyped
         // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+        if (cajaCotizacion.getText().length() >= 250) {
+            evt.consume();
+        }
     }//GEN-LAST:event_cajaCotizacionKeyTyped
 
 

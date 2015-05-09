@@ -38,7 +38,7 @@ public class PanelConsultas extends javax.swing.JPanel {
     public static String sqlClientes = "select nombreCliente from cliente order by nombreCliente asc";
     public static String sqlUsuarios = "select nombreUsuario from usuario order by nombreUsuario asc";
     public static String sqlPedidos = "SELECT numeroPedido, nombreUsuario, nombreCliente,especificacionTrabajo, especificacionDiseno, "
-            + "fechaSistema, fechaEntrega,horaSistema, estatus, formaPago, total, anticipo FROM pedidos WHERE estatus not in('Pagado') order by numeroPedido desc";
+            + "fechaSistema, fechaEntrega,horaSistema, estatus, formaPago, total, anticipo FROM pedidos WHERE estatus not in('Pagado') order by numeroPedido asc";
     public static String sqlActualizaEstatus = "UPDATE pedidos SET estatus=? WHERE numeroPedido=?";
     public static String sqlConsultaCategoria = "", sqlConsultaEventoBoton = "", sqlClientesID = "";
 

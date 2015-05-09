@@ -205,7 +205,7 @@ public class PanelCotizacion extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Producto", "Descripción", "Precio Unitario", "Cantidad", "Total"
+                "Producto", "Descripción", "Precio Unitario", "Cantidad", "Importe", "Descuento (%)", "Total"
             }
         ));
         jScrollPane2.setViewportView(tablaProductos);
@@ -650,7 +650,11 @@ public class PanelCotizacion extends javax.swing.JPanel {
     private void cajaAsuntoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaAsuntoKeyTyped
         // TODO add your handling code here:
         char caracter = evt.getKeyChar();
-        if (cajaBuscarCliente.getText().length() >= 45) {
+        if ((caracter < 'a' || caracter > 'z') && (caracter < 'A' || caracter > 'Z')
+          && (caracter < 'ñ') && (caracter < 'Ñ') && (caracter < '´') && (caracter != (char) KeyEvent.VK_SPACE) ) {
+            evt.consume();
+        }
+        if (cajaAsunto.getText().length() >= 45) {
             evt.consume();
         }
     }//GEN-LAST:event_cajaAsuntoKeyTyped
@@ -658,8 +662,11 @@ public class PanelCotizacion extends javax.swing.JPanel {
     private void cajaUbicacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cajaUbicacionKeyTyped
         // TODO add your handling code here:
         char caracter = evt.getKeyChar();
-
-        if (cajaBuscarCliente.getText().length() >= 45) {
+        if ((caracter < 'a' || caracter > 'z') && (caracter < 'A' || caracter > 'Z')
+          && (caracter < 'ñ') && (caracter < 'Ñ') && (caracter < '´') && (caracter != (char) KeyEvent.VK_SPACE) ) {
+            evt.consume();
+        }
+        if (cajaUbicacion.getText().length() >= 45) {
             evt.consume();
         }
     }//GEN-LAST:event_cajaUbicacionKeyTyped
